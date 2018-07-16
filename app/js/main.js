@@ -2,17 +2,18 @@ var jQuery = require('jQuery');
 import 'popper.js';
 import 'bootstrap';
 require("../scss/main.scss");
-const headerJson = { method: "get", "Access-Control-Allow-Origin": "*", mode: "cors", "Content-Type": "application/json" };
-document.write('<h1 class="text-secondary display-4">welcome to my app</h1>');
+// my code start from here
 console.log('app loaded');
-
-
-function createRepo(data, callback) {
+import { createIssueWidget, canceRepolWidget } from "./CreateWidget"
+function createRepo(passData, callback) {
   jQuery.ajax({
-    url: "https://api.github.com/orgs/sachinjain526/repos?access_token=313ccd01a0c47904416cd54df379dabcb0d08820",
+    url: "https://api.github.com/user/repos?access_token=313ccd01a0c47904416cd54df379dabcb0d08820",
     method: "POST",
     data: passData,
-    dataType: "json"
+    dataType: "json",
+    contentType: 'application/json; charset=utf-8',
+    "Access-Control-Allow-Origin": "*",
+    mode: "cors"
   }).done(function (msg) {
     callback(msg);
   }).fail(function (jqXHR, textStatus) {
@@ -21,6 +22,14 @@ function createRepo(data, callback) {
 }
 function showResponse(data) {
   console.log(data);
+}
+function eventListener() {
+  jQuery("queryRunner").on("click", "", function () {
+
+  });
+  jQuery("main").on("click", ".cancelWidget", function () {
+    jQuery(this).remove();
+  });
 }
 jQuery(document).ready(function () {
   let createData = {
@@ -32,5 +41,21 @@ jQuery(document).ready(function () {
     "has_projects": true,
     "has_wiki": true
   }
-  createRepo(createData, showResponse);
+  //createRepo(createData, showResponse);
 });
+var issueJson = {
+  "title": "Found a bug",
+  "body": "I'm having a problem with this.",
+  "assignees": [
+    "octocat"
+  ],
+  "milestone": 1,
+  "labels": [
+    "bug"
+  ]
+}
+var token = {
+  "access_token": "abcdefghijklmnopqrstuvwxyz..",
+  "expires_in": 3600,
+  "token_type": "Bearer"
+} 
