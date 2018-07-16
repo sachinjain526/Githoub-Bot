@@ -4,36 +4,40 @@ import 'bootstrap';
 require("../scss/main.scss");
 // my code start from here
 console.log('app loaded');
-import { createIssueWidget, canceRepolWidget } from "./CreateWidget"
-function createRepo(passData, callback) {
-  jQuery.ajax({
-    url: "https://api.github.com/user/repos?access_token=313ccd01a0c47904416cd54df379dabcb0d08820",
-    method: "POST",
-    data: passData,
-    dataType: "json",
-    contentType: 'application/json; charset=utf-8',
-    "Access-Control-Allow-Origin": "*",
-    mode: "cors"
-  }).done(function (msg) {
-    callback(msg);
-  }).fail(function (jqXHR, textStatus) {
-    console.log("Request failed: " + textStatus);
-  })
-}
+import { createIssueWidget, createRepoWidget } from "./CreateWidget";
+import { createGitRepository, createGitIssue } from './GetDataService';
+
 function showResponse(data) {
   console.log(data);
 }
 function eventListener() {
-  jQuery("queryRunner").on("click", "", function () {
-
+  jQuery("#queryRunner").on("click", "#submitQuery", function () {
+    var inputValue = jQuery("#queryInput").val();
+    if (inputValue) {
+      const repoName = inputValue.split(" ")[2];
+      if (inputValue.toLowerCase() == "create repo sachin-jain") {
+        if (jQuery("#repoWidget").length) {
+          jQuery("#repoName").val(repoName)
+        } else {
+          createRepoWidget(repoName)
+        }
+      }
+      else if (inputValue.toLowerCase() == "create issue sachin-jain") {
+        if (jQuery("#issueWidget").length) {
+          jQuery("#issueTitle").val(repoName)
+        } else {
+          createIssueWidget(repoName)
+        }
+      }
+    }
   });
   jQuery("main").on("click", ".cancelWidget", function () {
-    jQuery(this).remove();
+    jQuery(this).parents(".container").remove();
   });
 }
 jQuery(document).ready(function () {
   let createData = {
-    "name": "Hello-World",
+    "name": "Hello-rohit",
     "description": "This is your first repository",
     "homepage": "https://github.com",
     "private": false,
@@ -41,21 +45,21 @@ jQuery(document).ready(function () {
     "has_projects": true,
     "has_wiki": true
   }
-  //createRepo(createData, showResponse);
+  var issueJson = {
+    "title": "Found a bug",
+    "body": "I'm having a problem with this.",
+    "assignees": [
+      "octocat"
+    ],
+    "milestone": "none",
+    "labels": [
+      "bug"
+    ]
+  }
+  //createGitIssue(issueJson, showResponse);
+  //PATCH /repos/:owner/:repo/issues/:number
+  //GET /repos/:owner/:repo/issues
+  //GET /repos/:owner/:repo/issues/:number
+
+  eventListener();
 });
-var issueJson = {
-  "title": "Found a bug",
-  "body": "I'm having a problem with this.",
-  "assignees": [
-    "octocat"
-  ],
-  "milestone": 1,
-  "labels": [
-    "bug"
-  ]
-}
-var token = {
-  "access_token": "abcdefghijklmnopqrstuvwxyz..",
-  "expires_in": 3600,
-  "token_type": "Bearer"
-} 

@@ -2,13 +2,13 @@ var jQuery = require('jQuery');
 
 function createRepoWidget(data) {
     jQuery("#widgetSection").prepend(`
-    <div class="container my-3 mx-auto border border-info rounded">
+    <div class="container my-3 mx-auto border border-info rounded" id="repoWidget">
     <div class="row p-3">
         <form method="post" action="#" class="w-75 text-center">
             <div class="form-group row">
                 <label for="repoName" class="col-sm-3 col-form-label">Repo Name</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="repoName" placeholder="Enter your repo name">
+                    <input type="text" class="form-control" id="repoName" placeholder="Enter your repo name" value="${data}">
                 </div>
             </div>
             <div class="form-group row">
@@ -27,13 +27,13 @@ function createRepoWidget(data) {
 }
 function createIssueWidget(data) {
     jQuery("#widgetSection").prepend(`
-    <div class="container my-3 mx-auto border border-info rounded">
+    <div class="container my-3 mx-auto border border-info rounded" id="issueWidget">
     <div class="row p-3">
         <form method="post" action="#" class="w-75 text-center">
             <div class="form-group row">
                 <label for="issueTitle" class="col-sm-3 col-form-label">Title</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="issueTitle" placeholder="Enter title..">
+                    <input type="text" class="form-control" id="issueTitle" placeholder="Enter title.." value="${data}">
                 </div>
             </div>
             <div class="form-group row">
