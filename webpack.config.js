@@ -27,8 +27,7 @@ module.exports = {
           loader: "css-loader"
         }, {
           loader: "sass-loader"
-        }],
-        exclude: path.resolve(__dirname, "node_modules")// expect this 
+        }]
       }
     ]
   },

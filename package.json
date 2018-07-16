@@ -1,5 +1,5 @@
 {
-  "name": "webpack-basic-conf",
+  "name": "github-bot",
   "version": "1.0.0",
   "description": "configuration of webpack",
   "main": "main.js",
