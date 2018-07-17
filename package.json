@@ -22,6 +22,7 @@
     "css-loader": "^1.0.0",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
+    "recastai": "^3.7.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0"
   },

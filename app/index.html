@@ -18,10 +18,14 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav mr-auto" id="mainNavBar">
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Home
                         <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" id="AllIssue">All Issue
                     </a>
                 </li>
             </ul>
@@ -43,6 +47,55 @@
         </div>
         <div id="widgetSection">
 
+        </div>
+        <div id="userRepoContainer" class="container">
+            <div class="row" id="userRepoSection">
+            </div>
+        </div>
+        <div id="userIsuueContainer" class="container">
+            <div class="row" id="userIssueSection">
+                <section class="col-5 issuesection border border-secondary m-2 p-3 text-center" id="section-issuenumber">
+                    <h4>Isuue Number</h4>
+                    <div class="form-group row">
+                        <label for="issueTitle-issuenumber" class="col-sm-3 col-form-label">Title</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="issueTitle-issuenumber" placeholder="Enter title.." data-name="title">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="issueDescription-issuenumber" class="col-sm-3 col-form-label">Issue Description</label>
+                        <div class="col-sm-9">
+                            <textarea name="openissueDescription" id="issueDescription-issuenumber" rows="5" class="w-100"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="button-section">
+                        <button type="button" class="btn btn-danger" id="closeButton-issueNumber">Close</button>
+                        <button type="button" class="btn btn-dark editSection">Edit</button>
+                    </div>
+                </section>
+                <section class="col-5 issuesection border border-secondary  m-2 p-3 text-center" id="section-issuenumber">
+                    <h4>Isuue Number</h4>
+                    <div class="form-group row">
+                        <label for="issueTitle-issuenumber" class="col-sm-3 col-form-label">Title</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="issueTitle-issuenumber" placeholder="Enter title.." data-name="title">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="issueDescription-issuenumber" class="col-sm-3 col-form-label">Issue Description</label>
+                        <div class="col-sm-9">
+                            <textarea name="openissueDescription" id="issueDescription-issuenumber" rows="5" class="w-100"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="button-section">
+                        <button type="button" class="btn btn-danger" id="closeButton-issueNumber">Close</button>
+                        <button type="button" class="btn btn-dark editSection">Edit</button>
+                    </div>
+                </section>
+            </div>
+        </div>
     </main>
 </body>
 
