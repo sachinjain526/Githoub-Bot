@@ -1,4 +1,4 @@
-const jQuery = require('jQuery');
+const jQuery = require('jquery');
 function getFormData(containerId) {
     let formObj = {};
     jQuery("#" + containerId).find("input", "select", "textarea").each(function () {

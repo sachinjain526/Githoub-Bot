@@ -1,6 +1,6 @@
-const jQuery = require('jQuery');
-import { createIssueWidget, createRepoWidget } from "./CreateWidget";
-import { createGitRepository, createGitIssue, getAllFromGitApi, getInputFromRecastAPi } from './GetDataService';
+const jQuery = require('jquery');
+import { createIssueWidget, createRepoWidget, createUserIsuueWidget } from "./CreateWidget";
+import { createGitRepository, createGitIssue, getAllUserIssue, getInputFromRecastAPi } from './GetDataService';
 import { repoCreateJson, issueCreateJson } from './KeyAndPath';
 import { getFormData } from "./localUtility";
 
@@ -13,15 +13,16 @@ function eventListener() {
     jQuery("main").on("click", "#createRepo", function () {
         let formData = getFormData("repoWidget");
         var thisData = jQuery.extend(true, {}, repoCreateJson, formData);
-        createGitRepository(thisData, confirmationCall);
+        createGitRepository(thisData, completeRepoCreation);
     });
     jQuery("main").on("click", "#createIssue", function () {
         let formData = getFormData("issueWidget");
+        var getRepoName = jQuery("#repositoryName").text();
         var thisData = jQuery.extend(true, {}, issueCreateJson, formData);
-        createGitIssue(thisData, confirmationCall);
+        createGitIssue(thisData, getRepoName, completeIssueCreation);
     });
     jQuery("#mainNavBar").on("click", "#AllIssue", function () {
-        getAllFromGitApi("repos/sachinjain526/webapck-conf/issues", confirmationCall);
+        getAllUserIssue("repos/sachinjain526/webapck-conf/issues", createUserIsuueWidget);
     });
     jQuery("main").on("click", ".cancelWidget", function () {
         jQuery(this).parents(".container").remove();
@@ -42,12 +43,14 @@ function CreateRpeoAndIssueWidget(recastData) {
                 alert("please write valid query for repo creation");
             }
         } else if (value.slug == "create-issue") {
-            const issueTitle = recastData.entities.repository;
-            if (issueTitle) {
+            const issueTitle = recastData.entities.issue;
+            const repoName = recastData.entities.repository;
+            if (issueTitle && repoName) {
                 if (jQuery("#issueWidget").length) {
                     jQuery("#issueWidget").val(issueTitle[0].value);
+                    jQuery("#repositoryName").text(repoName[0].value);
                 } else {
-                    createRepoWidget(issueTitle[0].value);
+                    createIssueWidget(issueTitle[0].value, repoName[0].value);
                 }
             } else {
                 alert("please write valid query for issue creation");
@@ -56,19 +59,10 @@ function CreateRpeoAndIssueWidget(recastData) {
     });
     console.log(recastData);
 }
-function showResponse(data) {
-    console.log(data);
+function completeIssueCreation(msg) {
+    console.log(msg);
+}
+function completeRepoCreation(msg) {
+    console.log(msg);
 }
 export { eventListener }
-/*
-const recastai = require('recastai')
-
-const client = new recastai.request('82f3ba26a2d8e73677febb5f93528372', 'en')
-
-client.analyseText('hello')
-  .then(function(res) {
-    if (res.intent()) { console.log('Intent: ', res.intent().slug) }
-    if (res.intent().slug === 'YOUR_EXPECTED_INTENT') {
-      // Do your code...
-    }
-  })*/

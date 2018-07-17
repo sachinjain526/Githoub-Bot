@@ -1,14 +1,23 @@
-const jQuery = require('jQuery');
+const jQuery = require('jquery');
 import { gitBaseUrl, gitApiToken } from './KeyAndPath';
 
 function createGitRepository(passData, callback) {
+    const url = gitBaseUrl + "user/repos";
+    commonPostAjaxFunc(url, passData, callback);
+}
+function createGitIssue(passData, repoName, callback) {
+    let url = gitBaseUrl + "repos/sachinjain526/" + repoName + "/issues";
+    url = url.replace(/\s/g, "");
+    commonPostAjaxFunc(url, passData, callback);
+}
+function commonPostAjaxFunc(url, postData, callback) {
     jQuery.ajax({
         headers: {
             'Content-Type': 'application/json'
         },
-        url: gitBaseUrl + "user/repos",
+        url: url,
         method: "POST",
-        data: JSON.stringify(passData),
+        data: JSON.stringify(postData),
         dataType: "json",
         mode: "cors",
         beforeSend: function (xhr, settings) { xhr.setRequestHeader('Authorization', 'BEARER ' + gitApiToken); }
@@ -18,30 +27,20 @@ function createGitRepository(passData, callback) {
         console.log("Request failed: " + textStatus);
     })
 }
-function createGitIssue(passData, callback) {
+function getAllUserRepo(url, callback) {
+    const fullurl = gitBaseUrl + url;
+    commonGetAjaxFunc(fullurl, callback);
+}
+function getAllUserIssue(url, callback) {
+    const fullurl = gitBaseUrl + url;
+    commonGetAjaxFunc(fullurl, callback);
+}
+function commonGetAjaxFunc(url, callback) {
     jQuery.ajax({
         headers: {
             'Content-Type': 'application/json'
         },
-        url: gitBaseUrl + "repos/sachinjain526/webapck-conf/issues",
-        method: "POST",
-        data: JSON.stringify(passData),
-        dataType: "json",
-        mode: "cors",
-        beforeSend: function (xhr, settings) { xhr.setRequestHeader('Authorization', 'BEARER ' + gitApiToken); }
-    }).done(function (responseData) {
-        callback(responseData);
-    }).fail(function (jqXHR, textStatus) {
-        console.log("Request failed: " + textStatus);
-    })
-}
-function getAllFromGitApi(url, callback) {
-    jQuery.ajax({
-        headers: {
-            'Content-Type': 'application/json',
-            "Accept": "application/vnd.github.machine-man-preview"
-        },
-        url: gitBaseUrl + url,
+        url: url,
         method: "get",
         dataType: "json",
         mode: "cors",
@@ -67,7 +66,7 @@ function getInputFromRecastAPi(input, callback) {
         console.log("Request failed: " + textStatus);
     })
 }
-export { createGitRepository, createGitIssue, getAllFromGitApi, getInputFromRecastAPi };
+export { createGitRepository, createGitIssue, getAllUserRepo, getAllUserIssue, getInputFromRecastAPi };
 
 
   //createGitIssue(issueJson, showResponse);

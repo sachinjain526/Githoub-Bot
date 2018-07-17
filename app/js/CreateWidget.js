@@ -1,4 +1,4 @@
-const jQuery = require('jQuery');
+const jQuery = require('jquery');
 import { dateConvertToDDMMYYY } from "./localUtility";
 function createRepoWidget(data) {
     jQuery("#widgetSection").prepend(`
@@ -25,7 +25,7 @@ function createRepoWidget(data) {
     </div>
 </div>`);
 }
-function createIssueWidget(data) {
+function createIssueWidget(data, repoName) {
     jQuery("#widgetSection").prepend(`
     <div class="container my-3 mx-auto border border-info rounded" id="issueWidget">
     <div class="row p-3">
@@ -48,6 +48,9 @@ function createIssueWidget(data) {
                     <input type="text" class="form-control" id="issueLabel" placeholder="Enter Comma Saparated issue type.." data-type="array" data-name="labels" >
                 </div>
             </div>
+            <p class="form-group row d-none" id="repositoryName">
+                ${repoName}
+            </p>
             <div>
                 <button type="button" class="btn btn-primary" id="createIssue">Create Isuue</button>
                 <button type="button" class="btn btn-danger cancelWidget" id="cancelIssueWidget">Cancel</button>
@@ -74,4 +77,7 @@ function createUserRepository(conatinerId, userRepoData) {
     });
     jQuery("#" + conatinerId).html(thisHtml);
 }
-export { createIssueWidget, createRepoWidget, createUserRepository }
+function createUserIsuueWidget(data) {
+    console.log(data);
+}
+export { createIssueWidget, createRepoWidget, createUserRepository, createUserIsuueWidget }
