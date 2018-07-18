@@ -1,22 +1,11 @@
 const jQuery = require('jquery');
-import { gitBaseUrl, gitApiToken } from './KeyAndPath';
-
-function createGitRepository(passData, callback) {
-    const url = gitBaseUrl + "user/repos";
-    commonPostAjaxFunc(url, passData, callback);
-}
-function createGitIssue(passData, repoName, callback) {
-    let url = gitBaseUrl + "repos/sachinjain526/" + repoName + "/issues";
-    url = url.replace(/\s/g, "");
-    commonPostAjaxFunc(url, passData, callback);
-}
-function commonPostAjaxFunc(url, postData, callback) {
+import { gitBaseUrl, gitApiToken, getDescription } from './KeyAndPath';
+import { createModelPopup } from "./CreateWidget";
+// ajax common function 
+function commonPostAjaxFunc(url, mehtod, postData, callback) {
     jQuery.ajax({
-        headers: {
-            'Content-Type': 'application/json'
-        },
         url: url,
-        method: "POST",
+        method: mehtod,
         data: JSON.stringify(postData),
         dataType: "json",
         mode: "cors",
@@ -24,16 +13,9 @@ function commonPostAjaxFunc(url, postData, callback) {
     }).done(function (responseData) {
         callback(responseData);
     }).fail(function (jqXHR, textStatus) {
+        createModelPopup({ modalId: "errorModal", modalHeading: "Error-" + jqXHR.status, ClassName: "bg-danger text-white", modalContent: getDescription(jqXHR.status), buttonName: "Ok" });
         console.log("Request failed: " + textStatus);
     })
-}
-function getAllUserRepo(url, callback) {
-    const fullurl = gitBaseUrl + url;
-    commonGetAjaxFunc(fullurl, callback);
-}
-function getAllUserIssue(url, callback) {
-    const fullurl = gitBaseUrl + url;
-    commonGetAjaxFunc(fullurl, callback);
 }
 function commonGetAjaxFunc(url, callback) {
     jQuery.ajax({
@@ -48,6 +30,7 @@ function commonGetAjaxFunc(url, callback) {
     }).done(function (responseData) {
         callback(responseData);
     }).fail(function (jqXHR, textStatus) {
+        createModelPopup({ modalId: "errorModal", modalHeading: "Error-" + jqXHR.status, ClassName: "bg-danger text-white", modalContent: getDescription(jqXHR.status), buttonName: "Ok" });
         console.log("Request failed: " + textStatus);
     })
 }
@@ -63,10 +46,35 @@ function getInputFromRecastAPi(input, callback) {
     }).done(function (response) {
         callback(response.results);
     }).fail(function (jqXHR, textStatus) {
+        createModelPopup({ modalId: "errorModal", modalHeading: "Error-" + jqXHR.status, ClassName: "bg-danger text-white", modalContent: getDescription(jqXHR.status), buttonName: "Ok" });
         console.log("Request failed: " + textStatus);
     })
 }
-export { createGitRepository, createGitIssue, getAllUserRepo, getAllUserIssue, getInputFromRecastAPi };
+
+//PATCH /repos/:owner/:repo/issues/:number
+
+// function exposed to user
+function createGitRepository(passData, callback) {
+    const url = gitBaseUrl + "user/repos";
+    commonPostAjaxFunc(url, "POST", passData, callback);
+}
+function createGitIssue(passData, repoName, callback) {
+    let url = gitBaseUrl + "repos/sachinjain526/" + repoName + "/issues";
+    url = url.replace(/\s/g, "");
+    commonPostAjaxFunc(url, "POST", passData, callback);
+}
+function getAllUserRepo(url, callback) {
+    const fullurl = gitBaseUrl + url;
+    commonGetAjaxFunc(fullurl, callback);
+}
+function getAllUserIssue(url, callback) {
+    const fullurl = gitBaseUrl + url;
+    commonGetAjaxFunc(fullurl, callback);
+}
+function EditGitIssue(url, passData, callback) {
+    commonPostAjaxFunc(url, "patch", passData, callback);
+}
+export { createGitRepository, createGitIssue, getAllUserRepo, getAllUserIssue, EditGitIssue, getInputFromRecastAPi };
 
 
   //createGitIssue(issueJson, showResponse);

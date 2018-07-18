@@ -14,6 +14,6 @@ function createRepoSection(repoData) {
 }
 
 jQuery(document).ready(function () {
-  //getAllUserRepo("users/sachinjain526/repos", createRepoSection);
+  getAllUserRepo("users/sachinjain526/repos", createRepoSection);
   eventListener();
 });

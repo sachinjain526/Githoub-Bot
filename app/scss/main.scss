@@ -1,17 +1,92 @@
+/* font -awesome*/
+
+/* bootsrap 4 start from here*/
 @import "~bootstrap/scss/bootstrap";
+@import "_variable.scss";
+@import "_mixin.scss";
+@import "_nav.scss";
+
 body{
     background: #ececec;
     overflow-x: hidden;
 }
-nav{
-    background: lightseagreen;
+
+main{
+    min-height: 449px;
+    margin-top: 75px;
+    .jumbotron {
+        padding: 2rem;
+    }
+}
+.isOverflow{
+    
 }
 #userRepoSection{
     a{
         text-decoration: none;
+        color:#999;
         h4{
             color: #9a680a;
         }
     }
 
 }
+footer{
+  background: #73442d;
+}
+.footer-box-section{
+    flex:1 0 32.3%;
+    max-width: 32.3%;
+    border-radius:$border-radius;
+    background: $white;
+}
+.social-link li{
+    display: inline-block;
+    width: 37px;
+    border-radius: 50%;
+    margin-right: 5px;
+    padding: 4px;
+    @include textprop(20px, $white);
+}
+/* media query for bleo 1000 px*/
+@media (max-width:1000px){
+    .repo-section{
+        @include flexScreen(49%);
+        text-align: $text-align;
+
+    }
+}
+/* media query for bleo 900 px*/
+  @media (max-width:900px){
+    .footer-box-section{
+        @include flexScreen(100%);
+    }
+    .footer-section{
+        @include flexDirection(column !important);
+    }
+    main{
+        .container-fluid{
+            padding-left: 0;
+        }
+    }
+}
+/* media query for bleo 580 px*/
+@media (max-width:580px){
+#queryRunner{
+    #queryInput{
+        width: 90% !important;
+        margin: auto;
+    }
+    button{
+        display: block;
+        width: 100px;
+        margin: auto;
+    }
+}
+    .issuesection {
+    width: 100%;
+    }
+    .repo-section{
+        @include flexScreen(99%);        
+    }
+  }
