@@ -28,8 +28,10 @@ function eventListener() {
         jQuery(this).parents(".container").remove();
     });
     jQuery("body").on("click", ".modalClose", function () {
-        jQuery(this).parents(".modal").remove();
-        jQuery(".modal-backdrop").remove();
+        const modalId = jQuery(this).parents(".modal").attr("id");
+        jQuery('#' + modalId).on('hidden.bs.modal', function (e) {
+            jQuery(this).remove();
+        });
     }); makeFormEditable
     jQuery("#userIsuueContainer").on("click", ".editSection", function () {
         const thisObj = jQuery(this);

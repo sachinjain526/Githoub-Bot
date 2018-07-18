@@ -1,7 +1,16 @@
 #main-navbar{
     background: #73442d;
+    #logo{
+        font-size: 30px;
+        i{
+            margin-right: 2px;
+        }
+    }
     a{
-        color: $white;
+        @include textprop(20px, $white);
+    }
+    a:hover{
+        color: lightseagreen;
     }
 }
 .social-link li{

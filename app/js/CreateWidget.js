@@ -2,7 +2,8 @@ const jQuery = require('jquery');
 import { dateConvertToDDMMYYY } from "./localUtility";
 function createRepoWidget(data) {
     jQuery("#widgetSection").prepend(`
-    <div class="row p-3 my-3 mx-auto border border-info rounded" id="repoWidget">
+    <div class="p-3 my-3 mx-auto border border-info rounded" id="repoWidget">
+    <h3 class="text-center mt-2 mb-4 text-danger"> Create Repository </h3>
         <form method="post" action="#" class="w-100 text-center">
             <div class="form-group row">
                 <label for="repoName" class="col-sm-5 col-form-label">Repo Name</label>
@@ -25,7 +26,8 @@ function createRepoWidget(data) {
 }
 function createIssueWidget(data, repoName) {
     jQuery("#widgetSection").prepend(`
-    <div class="row p-3 my-3 mx-auto border border-info rounded" id="issueWidget">
+    <div class="p-3 my-3 mx-auto border border-info rounded" id="issueWidget">
+    <h3 class="text-center mt-2 mb-4 text-danger"> Create Issue </h3>
         <form method="post" action="#" class="w-100 text-center">
             <div class="form-group row">
                 <label for="issueTitle" class="col-sm-3 col-form-label">Title</label>

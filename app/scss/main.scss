@@ -18,9 +18,6 @@ main{
         padding: 2rem;
     }
 }
-.isOverflow{
-    
-}
 #userRepoSection{
     a{
         text-decoration: none;
@@ -35,19 +32,15 @@ footer{
   background: #73442d;
 }
 .footer-box-section{
-    flex:1 0 32.3%;
-    max-width: 32.3%;
+    flex:1 0 32%;
+    max-width: 32%;
     border-radius:$border-radius;
     background: $white;
 }
-.social-link li{
-    display: inline-block;
-    width: 37px;
-    border-radius: 50%;
-    margin-right: 5px;
-    padding: 4px;
-    @include textprop(20px, $white);
+.copyright{
+    color: $white;
 }
+
 /* media query for bleo 1000 px*/
 @media (max-width:1000px){
     .repo-section{
@@ -59,9 +52,10 @@ footer{
 /* media query for bleo 900 px*/
   @media (max-width:900px){
     .footer-box-section{
-        @include flexScreen(100%);
+        @include flexScreen(95%);
     }
     .footer-section{
+        align-items:center;
         @include flexDirection(column !important);
     }
     main{
@@ -87,6 +81,6 @@ footer{
     width: 100%;
     }
     .repo-section{
-        @include flexScreen(99%);        
+        @include flexScreen(95%);        
     }
   }
