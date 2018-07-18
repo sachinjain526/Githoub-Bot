@@ -90,9 +90,12 @@ function completeIssueCreation(msg) {
     createModelPopup({ modalId: "completeIssueCreation", modalHeading: "Confirmation", ClassName: "bg-success", modalContent: "You have successfully created issue in repository the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: "Close" });
 }
 function updateSuccessFully(data) {
-    createModelPopup({ modalId: "completeIssueCreation", modalHeading: "Confirmation", ClassName: "bg-success", modalContent: "You have successfully created repository in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: "Close" });
+    createModelPopup({ modalId: "completeIssueCreation", modalHeading: "Confirmation", ClassName: "bg-success", modalContent: "You have successfully uodated datea repositories issue in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: "Close" });
+    getAllUserIssue("user/issues?filter=all&state=all", constructIssueWidget);
 }
-function completeRepoCreation(msg) {
-    console.log(msg);
+function completeRepoCreation(repoData) {
+    console.log(repoData);
+    createModelPopup({ modalId: "completeIssueCreation", modalHeading: "Confirmation", ClassName: "bg-success", modalContent: "You have successfully created repository in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: "Close" });
+    createUserRepository("userRepoSection", repoData)
 }
 export { eventListener }

@@ -1,6 +1,7 @@
 const jQuery = require('jquery');
 import 'popper.js';
 import 'bootstrap';
+require("./AjaxSetting");
 require("../scss/main.scss");
 // my code start from here
 console.log('app loaded');

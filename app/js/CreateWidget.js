@@ -73,7 +73,7 @@ function createUserRepository(conatinerId, userRepoData) {
     </div>
 </a>`
     });
-    jQuery("#" + conatinerId).html(thisHtml);
+    jQuery("#" + conatinerId).append(thisHtml);
 }
 function createUserIsuueWidget(containerId, resData) {
     let issueHtml = "";
