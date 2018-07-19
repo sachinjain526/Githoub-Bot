@@ -1,6 +1,6 @@
 const jQuery = require('jquery');
-import { createIssueWidget, createRepoWidget, createUserIsuueWidget, createModelPopup } from "./CreateWidget";
-import { createGitRepository, createGitIssue, getAllUserIssue, EditGitIssue, getInputFromRecastAPi } from './GetDataService';
+import { createIssueWidget, createRepoWidget, createUserRepository, createUserIsuueWidget, createModelPopup } from "./CreateWidget";
+import { createGitRepository, createGitIssue, getAllUserIssue, EditGitIssue, getInputFromRecastAPi, addAndDeleteCollboraters } from './GetDataService';
 import { repoCreateJson, issueCreateJson } from './KeyAndPath';
 import { getFormData, makeFormEditable } from "./localUtility";
 
@@ -58,6 +58,9 @@ function eventListener() {
         const url = thisObj.parent().attr("api-url");
         EditGitIssue(url, { state: "open" }, updateSuccessFully);
     });
+    jQuery("#mainNavBar").on("click", "#AddCollaborators", function () {
+        createModelPopup({ modalId: "CollaboraterActions", modalHeading: "Collaborater Form", ClassName: "bg-primary text-dark", buttonName: "Close", submitBotton: "Submit", submitCallback: addCollaboraterInRepo });
+    });
 }
 // callback function for service
 function CreateRpeoAndIssueWidget(recastData) {
@@ -83,6 +86,16 @@ function CreateRpeoAndIssueWidget(recastData) {
     });
     console.log(recastData);
 }
+function addCollaboraterInRepo(modelId) {
+    let formData = getFormData(modelId);
+    addAndDeleteCollboraters(formData, collaboraterAddedSuccesfully);
+    jQuery('#' + modelId).on('hidden.bs.modal', function (e) {
+        jQuery(this).remove();
+    });
+}
+function collaboraterAddedSuccesfully() {
+    createModelPopup({ modalId: "collaboraterAddedSuccesfully", modalHeading: "Confirmation", ClassName: "bg-success", modalContent: "You have successfully uodated repositories collaborater in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: "Close" });
+}
 function constructIssueWidget(resData) {
     createUserIsuueWidget("userIsuueContainer", resData);
 }
@@ -90,7 +103,7 @@ function completeIssueCreation(msg) {
     createModelPopup({ modalId: "completeIssueCreation", modalHeading: "Confirmation", ClassName: "bg-success", modalContent: "You have successfully created issue in repository the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: "Close" });
 }
 function updateSuccessFully(data) {
-    createModelPopup({ modalId: "completeIssueCreation", modalHeading: "Confirmation", ClassName: "bg-success", modalContent: "You have successfully uodated datea repositories issue in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: "Close" });
+    createModelPopup({ modalId: "completeIssueCreation", modalHeading: "Confirmation", ClassName: "bg-success", modalContent: "You have successfully uodated issue in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: "Close" });
     getAllUserIssue("user/issues?filter=all&state=all", constructIssueWidget);
 }
 function completeRepoCreation(repoData) {

@@ -51,7 +51,23 @@ function getInputFromRecastAPi(input, callback) {
     })
 }
 
-//PATCH /repos/:owner/:repo/issues/:number
+//
+function addAndDeleteCollboraters(PostData, callback) {
+    ///repos/sachinjain526/sachin-jain/collaborators/sskeet
+    jQuery.ajax({
+        header: { "Content-Length": 0 },
+        url: gitBaseUrl + "repos/sachinjain526/" + PostData.collaboraterRepo + "/collaborators/" + PostData.collaboraterName,
+        method: PostData.collaboraterAction,
+        dataType: "json",
+        mode: "cors",
+        beforeSend: function (xhr, settings) { xhr.setRequestHeader('Authorization', 'BEARER ' + gitApiToken); }
+    }).done(function (responseData) {
+        callback(responseData);
+    }).fail(function (jqXHR, textStatus) {
+        createModelPopup({ modalId: "errorModal", modalHeading: "Error-" + jqXHR.status, ClassName: "bg-danger text-white", modalContent: getDescription(jqXHR.status), buttonName: "Ok" });
+        console.log("Request failed: " + textStatus);
+    })
+}
 
 // function exposed to user
 function createGitRepository(passData, callback) {
@@ -74,10 +90,5 @@ function getAllUserIssue(url, callback) {
 function EditGitIssue(url, passData, callback) {
     commonPostAjaxFunc(url, "patch", passData, callback);
 }
-export { createGitRepository, createGitIssue, getAllUserRepo, getAllUserIssue, EditGitIssue, getInputFromRecastAPi };
+export { createGitRepository, createGitIssue, getAllUserRepo, getAllUserIssue, EditGitIssue, getInputFromRecastAPi, addAndDeleteCollboraters };
 
-
-  //createGitIssue(issueJson, showResponse);
-  //PATCH /repos/:owner/:repo/issues/:number
-  //GET /repos/:owner/:repo/issues
-  //GET /repos/:owner/:repo/issues/:number

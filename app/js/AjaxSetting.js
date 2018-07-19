@@ -6,10 +6,7 @@ jQuery(document).on("ajaxSend", function (event, jqXHR, ajaxOptions) {
         console.log("ajaxStart");
     }, 1);
 })
-    .on("ajaxStop", function () {
-        var interval = setInterval(function () {
-            jQuery('#ajaxSpinner').remove();
-            clearInterval(interval);
-        }, 1000);
+    .on("ajaxComplete", function () {
+        jQuery('#ajaxSpinner').remove();
         console.log("ajaxStop");
     })

@@ -1,5 +1,5 @@
 const gitBaseUrl = "https://api.github.com/";
-const gitApiToken = "09716409b63cca1497460ebc9b5b287fe2d2207a";
+const gitApiToken = "e410b4a7e79776696a3404e00179bbb524a701bb";
 const repoCreateJson = {
     "name": "Hello-World",
     "description": "This is your first repository",
@@ -19,6 +19,9 @@ const issueCreateJson = {
 function getDescription(statusCode) {
     let statusDesc = ""
     switch (statusCode) {
+        case 204:
+            statusDesc = "Successfully Delete Collaborater from repository."
+            break;
         case 404:
             statusDesc = "Serach repository/issue not found. Please Try Again!."
             break;
