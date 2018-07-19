@@ -83,8 +83,7 @@ function getAllUserRepo(url, callback) {
     const fullurl = gitBaseUrl + url;
     commonGetAjaxFunc(fullurl, callback);
 }
-function getAllUserIssue(url, callback) {
-    const fullurl = gitBaseUrl + url;
+function getAllUserIssue(fullurl, callback) {
     commonGetAjaxFunc(fullurl, callback);
 }
 function EditGitIssue(url, passData, callback) {

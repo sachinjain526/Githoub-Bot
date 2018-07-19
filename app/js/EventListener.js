@@ -1,7 +1,7 @@
 const jQuery = require('jquery');
 import { createIssueWidget, createRepoWidget, createUserRepository, createUserIsuueWidget, createModelPopup, createFormModelPopup } from "./CreateWidget";
 import { getAllUserRepo, createGitRepository, createGitIssue, getAllUserIssue, EditGitIssue, getInputFromRecastAPi, addAndDeleteCollboraters } from './GetDataService';
-import { repoCreateJson, issueCreateJson } from './KeyAndPath';
+import { repoCreateJson, issueCreateJson, gitBaseUrl } from './KeyAndPath';
 import { getFormData, makeFormEditable } from "./localUtility";
 //
 function onLoadEventToFetchData() {
@@ -21,15 +21,17 @@ function eventListener() {
         let formData = getFormData("repoWidget");
         let thisData = jQuery.extend(true, {}, repoCreateJson, formData);
         createGitRepository(thisData, completeRepoCreation);
+        jQuery(this).parents(".container").remove();
     });
     jQuery("main").on("click", "#createIssue", function () {
         let formData = getFormData("issueWidget");
         let getRepoName = jQuery("#repositoryName").text();
         let thisData = jQuery.extend(true, {}, issueCreateJson, formData);
         createGitIssue(thisData, getRepoName, completeIssueCreation);
+        jQuery(this).parents(".container").remove();
     });
     jQuery("#mainNavBar").on("click", "#AllIssue", function () {
-        getAllUserIssue("user/issues?filter=all&state=all", constructIssueWidget);
+        getAllUserIssue(gitBaseUrl + "user/issues?filter=all&state=all", constructIssueWidget);
     });
     jQuery("main").on("click", ".cancelWidget", function () {
         jQuery(this).parents(".container").remove();
@@ -92,7 +94,7 @@ function CreateRpeoAndIssueWidget(recastData) {
         }
         else if (value.slug == "display-issue") {
             ///repos/sachinjain526/webapck-conf/issues
-            let url = "repos/sachinjain526/"
+            let url = gitBaseUrl + "repos/sachinjain526/";
             const target = recastData.entities.target ? recastData.entities.target[0].value : "";
             const repoName = recastData.entities.repository ? recastData.entities.repository[0].value : "";
             const state = recastData.entities.state ? recastData.entities.state[0].value : "";
@@ -144,7 +146,7 @@ function completeIssueCreation(msg) {
 }
 function updateSuccessFully(data) {
     createModelPopup({ modalId: "completeIssueCreation", modalHeading: "Confirmation", ClassName: "bg-success", modalContent: "You have successfully uodated issue in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: "Close" });
-    getAllUserIssue("user/issues?filter=all&state=all", constructIssueWidget);
+    getAllUserIssue(data.url, constructIssueWidget);
 }
 function completeRepoCreation(repoData) {
     console.log(repoData);

@@ -60,6 +60,11 @@ function createIssueWidget(data, repoName) {
     `)
 }
 function createUserRepository(conatinerId, userRepoData) {
+    if (userRepoData && userRepoData.length) {
+
+    } else {
+        userRepoData = [userRepoData];
+    }
     var thisHtml = "";
     jQuery.each(userRepoData, function (index, value) {
         let description = description ? description : "No description Found"
@@ -85,7 +90,7 @@ function createUserIsuueWidget(containerId, resData) {
     jQuery.each(resData, function (index, data) {
         issueHtml = issueHtml + `  <section class=" issuesection border border-secondary m-2 p-3 text-center font-weight-bold rounded" id="${data.id}" data-issue-url="${data.url}">
         <a href="${data.html_url}" target="_blank">
-            <h4>Issue Number :-${data.repository ? data.repository.name : "Current" + " #" + data.number}</h4>
+            <h4>Issue Number : ${data.repository ? data.repository.name : "Current"}/Isuue#${data.number}</h4>
         </a>
         <div class="d-flex border-bottom  border-top  border-info text-left my-2">
             <div class="col-6 px-3 border-right  border-info">
