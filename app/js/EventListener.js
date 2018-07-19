@@ -1,9 +1,16 @@
 const jQuery = require('jquery');
-import { createIssueWidget, createRepoWidget, createUserRepository, createUserIsuueWidget, createModelPopup } from "./CreateWidget";
-import { createGitRepository, createGitIssue, getAllUserIssue, EditGitIssue, getInputFromRecastAPi, addAndDeleteCollboraters } from './GetDataService';
+import { createIssueWidget, createRepoWidget, createUserRepository, createUserIsuueWidget, createModelPopup, createFormModelPopup } from "./CreateWidget";
+import { getAllUserRepo, createGitRepository, createGitIssue, getAllUserIssue, EditGitIssue, getInputFromRecastAPi, addAndDeleteCollboraters } from './GetDataService';
 import { repoCreateJson, issueCreateJson } from './KeyAndPath';
 import { getFormData, makeFormEditable } from "./localUtility";
-
+//
+function onLoadEventToFetchData() {
+    getAllUserRepo("users/sachinjain526/repos", createRepoSection);
+}
+// main document ready start
+function createRepoSection(repoData) {
+    createUserRepository("userRepoSection", repoData)
+}
 // event listener start from here
 function eventListener() {
     jQuery("#queryRunner").on("click", "#submitQuery", function () {
@@ -59,7 +66,7 @@ function eventListener() {
         EditGitIssue(url, { state: "open" }, updateSuccessFully);
     });
     jQuery("#mainNavBar").on("click", "#AddCollaborators", function () {
-        createModelPopup({ modalId: "CollaboraterActions", modalHeading: "Collaborater Form", ClassName: "bg-primary text-dark", buttonName: "Close", submitBotton: "Submit", submitCallback: addCollaboraterInRepo });
+        createFormModelPopup({ modalId: "CollaboraterActions", modalHeading: "Collaborater Form", submitCallback: addCollaboraterInRepo, formData: {} });
     });
 }
 // callback function for service
@@ -110,6 +117,12 @@ function CreateRpeoAndIssueWidget(recastData) {
             }
             getAllUserIssue(url, constructIssueWidget);
         }
+        else if (value.slug == "add-collaborator") {
+            const action = recastData.entities.action ? recastData.entities.action[0].value : "PATCH";
+            const repoName = recastData.entities.repository ? recastData.entities.repository[0].value : "";
+            const newcollab = recastData.entities.newcollab ? recastData.entities.newcollab[0].value : "";
+            createFormModelPopup({ modalId: "CollaboraterActions", modalHeading: "Collaborater Form", submitCallback: addCollaboraterInRepo, formData: { action, repoName, newcollab } });
+        }
     });
     console.log(recastData);
 }
@@ -138,4 +151,4 @@ function completeRepoCreation(repoData) {
     createModelPopup({ modalId: "completeIssueCreation", modalHeading: "Confirmation", ClassName: "bg-success", modalContent: "You have successfully created repository in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: "Close" });
     createUserRepository("userRepoSection", repoData)
 }
-export { eventListener }
+export { eventListener, onLoadEventToFetchData }

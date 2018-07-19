@@ -5,16 +5,9 @@ require("./AjaxSetting");
 require("../scss/main.scss");
 // my code start from here
 console.log('app loaded');
-import { eventListener } from "./EventListener";
-import { getAllUserRepo } from "./GetDataService";
-import { createUserRepository } from "./CreateWidget";
-
-// main document ready start
-function createRepoSection(repoData) {
-  createUserRepository("userRepoSection", repoData)
-}
+import { eventListener, onLoadEventToFetchData } from "./EventListener";
 
 jQuery(document).ready(function () {
-  //getAllUserRepo("users/sachinjain526/repos", createRepoSection);
+  onLoadEventToFetchData();
   eventListener();
 });

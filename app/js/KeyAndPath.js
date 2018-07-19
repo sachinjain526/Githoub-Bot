@@ -1,5 +1,5 @@
 const gitBaseUrl = "https://api.github.com/";
-const gitApiToken = "dcf74ce19806ab3741b19cfb361ce7a85fc7573f";
+const gitApiToken = "5af0cea9cd306c86572d6bb9a87fcb71b1ee6f62";
 const repoCreateJson = {
     "name": "Hello-World",
     "description": "This is your first repository",
