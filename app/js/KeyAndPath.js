@@ -1,5 +1,5 @@
 const gitBaseUrl = "https://api.github.com/";
-const gitApiToken = "e410b4a7e79776696a3404e00179bbb524a701bb";
+const gitApiToken = "dcf74ce19806ab3741b19cfb361ce7a85fc7573f";
 const repoCreateJson = {
     "name": "Hello-World",
     "description": "This is your first repository",
@@ -27,7 +27,7 @@ function getDescription(statusCode) {
             break;
         case 400: statusDesc = "Bad Request-Please passed the correct data to complete this action. And Try Again!."
             break;
-        case 401: statusDesc = "Unauthorized-Please input correct Authrization to complere this action. And Try Again!."
+        case 401: statusDesc = "Unauthorized-Please input correct Authrization to complete this action. And Try Again!."
             break;
         case 403: statusDesc = "server locked and other reasons. Please Try after some time!."
             break;

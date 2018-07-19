@@ -83,6 +83,33 @@ function CreateRpeoAndIssueWidget(recastData) {
                 createModelPopup({ modalId: "errorModal", modalHeading: "Error", ClassName: "bg-danger text-white", modalContent: "please write valid query for issue creation", buttonName: "Ok" });
             }
         }
+        else if (value.slug == "display-issue") {
+            ///repos/sachinjain526/webapck-conf/issues
+            let url = "repos/sachinjain526/"
+            const target = recastData.entities.target ? recastData.entities.target[0].value : "";
+            const repoName = recastData.entities.repository ? recastData.entities.repository[0].value : "";
+            const state = recastData.entities.state ? recastData.entities.state[0].value : "";
+            const number = recastData.entities.number ? recastData.entities.number[0].raw : 1;
+            // for repo
+            if (repoName) {
+                url = url + repoName + "/issues";
+                if (target == "all" || target == "any") {
+                    url = url + "?filter=all"
+                    if (state) {
+                        url = url + "&state=" + state;
+                    }
+                }
+                else {
+                    url = url + "/" + number;
+                }
+            } else {
+                url = "user/issues?filter=all";
+                if (state) {
+                    url = url + "&state=" + state;
+                }
+            }
+            getAllUserIssue(url, constructIssueWidget);
+        }
     });
     console.log(recastData);
 }
