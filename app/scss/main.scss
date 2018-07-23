@@ -106,10 +106,10 @@ footer{
 }
 /* media query for bleo 900 px*/
   @media (max-width:900px){
-    .footer-box-section{
+    .footer-box-section,.issuesection{
         @include flexScreen(95%);
     }
-    .footer-section{
+    .footer-section,#userIsuueContainer{
         align-items:center;
         @include flexDirection(column !important);
     }
