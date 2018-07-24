@@ -4,7 +4,7 @@ import { createModelPopup } from './createModal/createModalWidget'
 
 const jQuery = require('jquery')
 // ajax common function
-function commonPostAjaxFunc (url, mehtod, postData, callback) {
+function commonPostAjaxFunc(url, mehtod, postData, callback) {
   jQuery.ajax({
     url: url,
     method: mehtod,
@@ -14,12 +14,11 @@ function commonPostAjaxFunc (url, mehtod, postData, callback) {
     beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'BEARER ' + gitApiToken) }
   }).done(function (responseData) {
     callback(responseData)
-  }).fail(function (jqXHR, textStatus) {
+  }).fail(function (jqXHR) {
     createModelPopup({ modalId: 'errorModal', modalHeading: 'Error-' + jqXHR.status, ClassName: 'bg-danger text-white', modalContent: getErrorDescription(jqXHR.status), buttonName: 'Ok' })
-    console.log('Request failed: ' + textStatus)
   })
 }
-function commonGetAjaxFunc (url, callback) {
+function commonGetAjaxFunc(url, callback) {
   jQuery.ajax({
     headers: {
       'Content-Type': 'application/json'
@@ -31,12 +30,11 @@ function commonGetAjaxFunc (url, callback) {
     beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'BEARER ' + gitApiToken) }
   }).done(function (responseData) {
     callback(responseData)
-  }).fail(function (jqXHR, textStatus) {
+  }).fail(function (jqXHR) {
     createModelPopup({ modalId: 'errorModal', modalHeading: 'Error-' + jqXHR.status, ClassName: 'bg-danger text-white', modalContent: getErrorDescription(jqXHR.status), buttonName: 'Ok' })
-    console.log('Request failed: ' + textStatus)
   })
 }
-function getInputFromRecastAPi (input, callback) {
+function getInputFromRecastAPi(input, callback) {
   jQuery.ajax({
     headers: {
       'Content-Type': 'application/json'
@@ -47,9 +45,8 @@ function getInputFromRecastAPi (input, callback) {
     beforeSend: function (xhr) { xhr.setRequestHeader('Authorization', 'Token 82f3ba26a2d8e73677febb5f93528372') }
   }).done(function (response) {
     callback(response.results)
-  }).fail(function (jqXHR, textStatus) {
+  }).fail(function (jqXHR) {
     createModelPopup({ modalId: 'errorModal', modalHeading: 'Error-' + jqXHR.status, ClassName: 'bg-danger text-white', modalContent: getErrorDescription(jqXHR.status), buttonName: 'Ok' })
-    console.log('Request failed: ' + textStatus)
   })
 }
 

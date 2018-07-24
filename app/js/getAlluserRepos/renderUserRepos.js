@@ -1,10 +1,8 @@
 import { dateConvertToDDMMYYY } from '../localUtility'
 const jQuery = require('jquery')
 
-function userReposConstruction (conatinerId, userRepoData) {
-  if (userRepoData && userRepoData.length) {
-    console.log(userRepoData)
-  } else {
+function renderUserRepos(conatinerId, userRepoData) {
+  if (!(userRepoData && userRepoData.length)) {
     userRepoData = [userRepoData]
   }
   var thisHtml = ''
@@ -22,4 +20,4 @@ function userReposConstruction (conatinerId, userRepoData) {
   })
   jQuery('#' + conatinerId).append(thisHtml)
 }
-export { userReposConstruction }
+export { renderUserRepos }

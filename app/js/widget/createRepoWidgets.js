@@ -1,9 +1,10 @@
+const jQuery = require('jquery');
 import { commonPostAjaxFunc } from '../GetDataService';
 import { gitBaseUrl } from '../KeyAndPath';
 import { createModelPopup } from '../createModal/createModalWidget';
-import { userReposConstruction } from '../getAlluserRepos/userReposConstruction';
-const jQuery = require('jquery');
-function createRepoWidgets(data) {
+import { renderUserRepos } from '../getAlluserRepos/renderUserRepos';
+
+function createRepoWidgets(repoName) {
     jQuery('#widgetSection').prepend(`
             <div class="p-3 my-3 mx-auto border border-info rounded" id="repoWidget">
                 <h3 class="text-center mt-2 mb-4 text-danger"> Create Repository </h3>
@@ -11,7 +12,7 @@ function createRepoWidgets(data) {
                     <div class="form-group row">
                         <label for="repoName" class="col-sm-5 col-form-label">Repo Name</label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="repoName" placeholder="Enter your repo name" value="${data}" data-name="name">
+                            <input type="text" class="form-control" id="repoName" placeholder="Enter your repo name" value="${repoName}" data-name="name">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -33,8 +34,7 @@ function createGitRepository(passData) {
     commonPostAjaxFunc(url, 'POST', passData, completeRepoCreation);
 }
 function completeRepoCreation(repoData) {
-    console.log(repoData);
     createModelPopup({ modalId: 'completeIssueCreation', modalHeading: 'Confirmation', ClassName: 'bg-success', modalContent: "You have successfully created repository in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: 'Close' })
-    userReposConstruction('userRepoSection', repoData);
+    renderUserRepos('userRepoSection', repoData);
 }
 export { createRepoWidgets, createGitRepository };

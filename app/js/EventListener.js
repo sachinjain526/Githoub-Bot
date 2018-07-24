@@ -2,15 +2,15 @@ import { createRepoWidgets, createGitRepository } from './widget/createRepoWidge
 // createRepoWidget,createGitRepository
 import { createIssueWidgets, createGitIssue } from './widget/createIssueWidgets'
 import { createUserissueSection, EditGitIssue } from './getAndUpdateAllIssues/getAndUpdateAllIssues'
-import { createModelPopup, createFormModelPopup } from './createModal/createModalWidget'
+import { createModelPopup, createFormPopup } from './createModal/createModalWidget'
 import { getInputFromRecastAPi } from './GetDataService'
 import { repoCreateJson, issueCreateJson, gitBaseUrl } from './KeyAndPath'
 import { getFormData, makeFormEditable, setDataToLocalStorage } from './localUtility'
-import { addAndDeleteCollboraters } from './collaboratorModule/addAndDeleteCollaborator'
+import { updateCollboraters } from './collaboratorModule/updateCollboraters'
 const jQuery = require('jquery')
 
 // event listener start from here
-function eventListener () {
+function eventListener() {
   jQuery('#queryRunner').on('click', '#submitQuery', function () {
     let inputValue = jQuery('#queryInput').val()
     getInputFromRecastAPi(inputValue, CreateRpeoAndIssueWidget)
@@ -66,11 +66,11 @@ function eventListener () {
     EditGitIssue(url, { state: 'open' })
   })
   jQuery('#mainNavBar').on('click', '#AddCollaborators', function () {
-    createFormModelPopup({ modalId: 'CollaboraterActions', modalHeading: 'Collaborater Form', submitCallback: addCollaboraterInRepo, formData: {} })
+    createFormPopup({ modalId: 'CollaboraterActions', modalHeading: 'Collaborater Form', submitCallback: addCollaboraterInRepo, formData: {} })
   })
 }
 // callback function for service
-function CreateRpeoAndIssueWidget (recastData) {
+function CreateRpeoAndIssueWidget(recastData) {
   jQuery.each(recastData.intents, function (index, value) {
     if (value.slug === 'create-repo') {
       const repoName = recastData.entities.repository
@@ -120,14 +120,13 @@ function CreateRpeoAndIssueWidget (recastData) {
       const action = recastData.entities.action ? recastData.entities.action[0].value : 'PATCH'
       const repoName = recastData.entities.repository ? recastData.entities.repository[0].value : ''
       const newcollab = recastData.entities.newcollab ? recastData.entities.newcollab[0].value : ''
-      createFormModelPopup({ modalId: 'CollaboraterActions', modalHeading: 'Collaborater Form', submitCallback: addCollaboraterInRepo, formData: { action, repoName, newcollab } })
+      createFormPopup({ modalId: 'CollaboraterActions', modalHeading: 'Collaborater Form', submitCallback: addCollaboraterInRepo, formData: { action, repoName, newcollab } })
     }
   })
-  console.log(recastData)
 }
-function addCollaboraterInRepo (modelId) {
+function addCollaboraterInRepo(modelId) {
   let formData = getFormData(modelId)
-  addAndDeleteCollboraters(formData)
+  updateCollboraters(formData)
   jQuery('#' + modelId).on('hidden.bs.modal', function () {
     jQuery(this).remove()
   })

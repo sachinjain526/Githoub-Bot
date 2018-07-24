@@ -154,7 +154,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.addAndDeleteCollboraters = undefined;\n\nvar _KeyAndPath = __webpack_require__(/*! ../KeyAndPath */ \"./app/js/KeyAndPath.js\");\n\nvar _createModalWidget = __webpack_require__(/*! ../createModal/createModalWidget */ \"./app/js/createModal/createModalWidget.js\");\n\nvar _localUtility = __webpack_require__(/*! ../localUtility */ \"./app/js/localUtility.js\");\n\nvar jQuery = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n\nfunction addAndDeleteCollboraters(PostData) {\n  /// repos/sachinjain526/sachin-jain/collaborators/sskeet\n  jQuery.ajax({\n    header: { 'Content-Length': 0 },\n    url: _KeyAndPath.gitBaseUrl + 'repos/sachinjain526/' + PostData.collaboraterRepo + '/collaborators/' + PostData.collaboraterName,\n    method: PostData.collaboraterAction,\n    dataType: 'json',\n    mode: 'cors',\n    beforeSend: function beforeSend(xhr) {\n      xhr.setRequestHeader('Authorization', 'BEARER ' + _KeyAndPath.gitApiToken);\n    }\n  }).done(function (responseData) {\n    collaboraterAddedSuccesfully(responseData);\n  }).fail(function (jqXHR, textStatus) {\n    (0, _createModalWidget.createModelPopup)({ modalId: 'errorModal', modalHeading: 'Error-' + jqXHR.status, ClassName: 'bg-danger text-white', modalContent: (0, _localUtility.getErrorDescription)(jqXHR.status), buttonName: 'Ok' });\n    console.log('Request failed: ' + textStatus);\n  });\n}\nfunction collaboraterAddedSuccesfully() {\n  (0, _createModalWidget.createModelPopup)({ modalId: 'collaboraterAddedSuccesfully', modalHeading: 'Confirmation', ClassName: 'bg-success', modalContent: 'You have successfully uodated repositories collaborater in the gitHub <span class=\"text-success\"> For More Info Please Visit: www.github.com</span>', buttonName: 'Close' });\n}\nexports.addAndDeleteCollboraters = addAndDeleteCollboraters;\n\n//# sourceURL=webpack:///./app/js/collaboratorModule/addAndDeleteCollaborator.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.addAndDeleteCollboraters = undefined;\n\nvar _KeyAndPath = __webpack_require__(/*! ../KeyAndPath */ \"./app/js/KeyAndPath.js\");\n\nvar _createModalWidget = __webpack_require__(/*! ../createModal/createModalWidget */ \"./app/js/createModal/createModalWidget.js\");\n\nvar _localUtility = __webpack_require__(/*! ../localUtility */ \"./app/js/localUtility.js\");\n\nvar jQuery = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n\nfunction addAndDeleteCollboraters(collaborator) {\n  /// repos/sachinjain526/sachin-jain/collaborators/sskeet\n  jQuery.ajax({\n    header: { 'Content-Length': 0 },\n    url: _KeyAndPath.gitBaseUrl + 'repos/sachinjain526/' + collaborator.collaboraterRepo + '/collaborators/' + collaborator.collaboraterName,\n    method: collaborator.collaboraterAction,\n    dataType: 'json',\n    mode: 'cors',\n    beforeSend: function beforeSend(xhr) {\n      xhr.setRequestHeader('Authorization', 'BEARER ' + _KeyAndPath.gitApiToken);\n    }\n  }).done(function (responseData) {\n    collaboratorCallback(responseData);\n  }).fail(function (jqXHR, textStatus) {\n    (0, _createModalWidget.createModelPopup)({ modalId: 'errorModal', modalHeading: 'Error-' + jqXHR.status, ClassName: 'bg-danger text-white', modalContent: (0, _localUtility.getErrorDescription)(jqXHR.status), buttonName: 'Ok' });\n    console.log('Request failed: ' + textStatus);\n  });\n}\nfunction collaboratorCallback() {\n  (0, _createModalWidget.createModelPopup)({ modalId: 'collaboraterAddedSuccesfully', modalHeading: 'Confirmation', ClassName: 'bg-success', modalContent: 'You have successfully uodated repositories collaborater in the gitHub <span class=\"text-success\"> For More Info Please Visit: www.github.com</span>', buttonName: 'Close' });\n}\nexports.addAndDeleteCollboraters = addAndDeleteCollboraters;\n\n//# sourceURL=webpack:///./app/js/collaboratorModule/addAndDeleteCollaborator.js?");
 
 /***/ }),
 
@@ -178,7 +178,19 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.createAlluserRepos = undefined;\n\nvar _userReposConstruction = __webpack_require__(/*! ./userReposConstruction */ \"./app/js/getAlluserRepos/userReposConstruction.js\");\n\nvar _GetDataService = __webpack_require__(/*! ../GetDataService */ \"./app/js/GetDataService.js\");\n\nvar _KeyAndPath = __webpack_require__(/*! ../KeyAndPath */ \"./app/js/KeyAndPath.js\");\n\nvar contianerId = '';\nfunction createAlluserRepos(contianer) {\n  contianerId = contianer;\n  getAllUserRepo();\n}\n\nfunction getServiceData(repoData) {\n  (0, _userReposConstruction.userReposConstruction)(contianerId, repoData);\n}\nfunction getAllUserRepo() {\n  var fullurl = _KeyAndPath.gitBaseUrl + 'users/sachinjain526/repos';\n  (0, _GetDataService.commonGetAjaxFunc)(fullurl, getServiceData);\n}\n\nexports.createAlluserRepos = createAlluserRepos;\n\n//# sourceURL=webpack:///./app/js/getAlluserRepos/getAlluserRepos.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.createAlluserRepos = undefined;\n\nvar _renderUserRepos = __webpack_require__(/*! ./renderUserRepos */ \"./app/js/getAlluserRepos/renderUserRepos.js\");\n\nvar _GetDataService = __webpack_require__(/*! ../GetDataService */ \"./app/js/GetDataService.js\");\n\nvar _KeyAndPath = __webpack_require__(/*! ../KeyAndPath */ \"./app/js/KeyAndPath.js\");\n\nvar contianerId = '';\nfunction createAlluserRepos(contianer) {\n  contianerId = contianer;\n  getAllUserRepo();\n}\n\nfunction getServiceData(repoData) {\n  (0, _renderUserRepos.renderUserRepos)(contianerId, repoData);\n}\nfunction getAllUserRepo() {\n  var fullurl = _KeyAndPath.gitBaseUrl + 'users/sachinjain526/repos';\n  (0, _GetDataService.commonGetAjaxFunc)(fullurl, getServiceData);\n}\n\nexports.createAlluserRepos = createAlluserRepos;\n\n//# sourceURL=webpack:///./app/js/getAlluserRepos/getAlluserRepos.js?");
+
+/***/ }),
+
+/***/ "./app/js/getAlluserRepos/renderUserRepos.js":
+/*!***************************************************!*\
+  !*** ./app/js/getAlluserRepos/renderUserRepos.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.renderUserRepos = undefined;\n\nvar _localUtility = __webpack_require__(/*! ../localUtility */ \"./app/js/localUtility.js\");\n\nvar jQuery = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n\nfunction renderUserRepos(conatinerId, userRepoData) {\n  if (userRepoData && userRepoData.length) {\n    console.log(userRepoData);\n  } else {\n    userRepoData = [userRepoData];\n  }\n  var thisHtml = '';\n  jQuery.each(userRepoData, function (index, value) {\n    var description = value.description || 'No description Found';\n    thisHtml = thisHtml + ('<a class=\"col-4 p-3 shadow repo-section\" href=\"' + value.html_url + '\">\\n        <div class=\"border border-info rounded p-2\">\\n        <h4 class=\"text-center text-truncate\">' + value.name + '</h4>\\n        <p class=\"m-1\">' + description + '</p>\\n        <p class=\"m-1\">Open Issue: <strong class=\"text-danger\">' + value.open_issues + '</strong></p>\\n        <p class=\"m-1\">Created: <strong class=\"text-primary\">' + (0, _localUtility.dateConvertToDDMMYYY)(value.created_at) + '</strong></p>\\n        <p class=\"m-1\">Last Updated: <strong class=\"text-success\"> ' + (0, _localUtility.dateConvertToDDMMYYY)(value.updated_at) + '</strong></p>\\n        </div>\\n    </a>');\n  });\n  jQuery('#' + conatinerId).append(thisHtml);\n}\nexports.renderUserRepos = renderUserRepos;\n\n//# sourceURL=webpack:///./app/js/getAlluserRepos/renderUserRepos.js?");
 
 /***/ }),
 
@@ -187,10 +199,9 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
   !*** ./app/js/getAlluserRepos/userReposConstruction.js ***!
   \*********************************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.userReposConstruction = undefined;\n\nvar _localUtility = __webpack_require__(/*! ../localUtility */ \"./app/js/localUtility.js\");\n\nvar jQuery = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n\nfunction userReposConstruction(conatinerId, userRepoData) {\n  if (userRepoData && userRepoData.length) {\n    console.log(userRepoData);\n  } else {\n    userRepoData = [userRepoData];\n  }\n  var thisHtml = '';\n  jQuery.each(userRepoData, function (index, value) {\n    var description = value.description || 'No description Found';\n    thisHtml = thisHtml + ('<a class=\"col-4 p-3 shadow repo-section\" href=\"' + value.html_url + '\">\\n        <div class=\"border border-info rounded p-2\">\\n        <h4 class=\"text-center text-truncate\">' + value.name + '</h4>\\n        <p class=\"m-1\">' + description + '</p>\\n        <p class=\"m-1\">Open Issue: <strong class=\"text-danger\">' + value.open_issues + '</strong></p>\\n        <p class=\"m-1\">Created: <strong class=\"text-primary\">' + (0, _localUtility.dateConvertToDDMMYYY)(value.created_at) + '</strong></p>\\n        <p class=\"m-1\">Last Updated: <strong class=\"text-success\"> ' + (0, _localUtility.dateConvertToDDMMYYY)(value.updated_at) + '</strong></p>\\n        </div>\\n    </a>');\n  });\n  jQuery('#' + conatinerId).append(thisHtml);\n}\nexports.userReposConstruction = userReposConstruction;\n\n//# sourceURL=webpack:///./app/js/getAlluserRepos/userReposConstruction.js?");
+eval("throw new Error(\"Module build failed (from ./node_modules/babel-loader/lib/index.js):\\nError: ENOENT: no such file or directory, open 'C:\\\\Users\\\\SACJAIN1\\\\Desktop\\\\Github-Bot\\\\app\\\\js\\\\getAlluserRepos\\\\userReposConstruction.js'\");\n\n//# sourceURL=webpack:///./app/js/getAlluserRepos/userReposConstruction.js?");
 
 /***/ }),
 
@@ -254,6 +265,18 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 
 /***/ }),
 
+/***/ "./app/js/reduxReducer.js":
+/*!********************************!*\
+  !*** ./app/js/reduxReducer.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.createWidgetReducer = undefined;\n\nvar _createRepoWidgets = __webpack_require__(/*! ./widget/createRepoWidgets */ \"./app/js/widget/createRepoWidgets.js\");\n\nvar _createIssueWidgets = __webpack_require__(/*! ./widget/createIssueWidgets */ \"./app/js/widget/createIssueWidgets.js\");\n\nvar _actions = __webpack_require__(/*! ./actions */ \"./app/js/actions.js\");\n\nvar createWidgetReducer = exports.createWidgetReducer = function createWidgetReducer() {\n    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n    var action = arguments[1];\n\n    if (action.type === _actions.CREATE_REPO) {\n        (0, _createRepoWidgets.createRepoWidgets)(action.payload.repoName);\n    } else if (action.type === _actions.CREATE_ISSUE) {\n        (0, _createIssueWidgets.createIssueWidgets)(action.payload.title, action.payload.repoName);\n    }\n    return state;\n};\n\n//# sourceURL=webpack:///./app/js/reduxReducer.js?");
+
+/***/ }),
+
 /***/ "./app/js/reduxStore.js":
 /*!******************************!*\
   !*** ./app/js/reduxStore.js ***!
@@ -262,7 +285,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.store = undefined;\n\nvar _redux = __webpack_require__(/*! redux */ \"./node_modules/redux/es/redux.js\");\n\nvar _createRepoWidgets = __webpack_require__(/*! ./widget/createRepoWidgets */ \"./app/js/widget/createRepoWidgets.js\");\n\nvar _createIssueWidgets = __webpack_require__(/*! ./widget/createIssueWidgets */ \"./app/js/widget/createIssueWidgets.js\");\n\nvar _actions = __webpack_require__(/*! ./actions */ \"./app/js/actions.js\");\n\n// coding start\nvar CreateWidgetReducer = function CreateWidgetReducer() {\n  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n  var action = arguments[1];\n\n  if (action.type === _actions.CREATE_REPO) {\n    (0, _createRepoWidgets.createRepoWidgets)(action.payload.repoName);\n  } else if (action.type === _actions.CREATE_ISSUE) {\n    (0, _createIssueWidgets.createIssueWidgets)(action.payload.title, action.payload.repoName);\n  }\n  return state;\n};\nvar store = exports.store = (0, _redux.createStore)(CreateWidgetReducer, {});\n\nstore.subscribe(function () {\n  console.log(store.getState());\n});\n\n//# sourceURL=webpack:///./app/js/reduxStore.js?");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.store = undefined;\n\nvar _redux = __webpack_require__(/*! redux */ \"./node_modules/redux/es/redux.js\");\n\nvar _reduxReducer = __webpack_require__(/*! ./reduxReducer */ \"./app/js/reduxReducer.js\");\n\n// coding start\nvar store = exports.store = (0, _redux.createStore)(_reduxReducer.createWidgetReducer, {});\n\nstore.subscribe(function () {\n  console.log(store.getState());\n});\n\n//# sourceURL=webpack:///./app/js/reduxStore.js?");
 
 /***/ }),
 

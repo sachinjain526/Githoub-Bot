@@ -1,7 +1,7 @@
 const jQuery = require('jquery')
 
-function createModelPopup (data) { // headername modelId
-  jQuery('body').append(`<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="${data.modalId}">
+function createModelPopup(data) { // headername modelId
+    jQuery('body').append(`<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="${data.modalId}">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <!-- Modal Header -->
@@ -24,15 +24,15 @@ function createModelPopup (data) { // headername modelId
         </div>
     </div>
     </div>`)
-  jQuery('#' + data.modalId).modal('show')
-  jQuery(document).on('click', '.modalSubmit', function () {
-    if (data.submitCallback) {
-      data.submitCallback(data.modalId)
-    }
-  })
+    jQuery('#' + data.modalId).modal('show')
+    jQuery(document).on('click', '.modalSubmit', function () {
+        if (data.submitCallback) {
+            data.submitCallback(data.modalId)
+        }
+    })
 }
-function createFormModelPopup (data) {
-  var addCollHtml = `
+function createFormPopup(data) {
+    var addCollHtml = `
     <form method="post" action="#" class="w-100 text-center">
     <div class="form-group row">
         <label for="collaboraterAction" class="col-sm-3 col-form-label">Action</label>
@@ -57,7 +57,7 @@ function createFormModelPopup (data) {
     </div>
 </form>
     `
-  jQuery('body').append(`<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="${data.modalId}">
+    jQuery('body').append(`<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="${data.modalId}">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <!-- Modal Header -->
@@ -80,11 +80,11 @@ function createFormModelPopup (data) {
         </div>
     </div>
     </div>`)
-  jQuery('#' + data.modalId).modal('show')
-  jQuery(document).on('click', '.modalSubmit', function () {
-    if (data.submitCallback) {
-      data.submitCallback(data.modalId)
-    }
-  })
+    jQuery('#' + data.modalId).modal('show')
+    jQuery(document).on('click', '.modalSubmit', function () {
+        if (data.submitCallback) {
+            data.submitCallback(data.modalId)
+        }
+    })
 }
-export { createModelPopup, createFormModelPopup }
+export { createModelPopup, createFormPopup }

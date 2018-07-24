@@ -1,5 +1,5 @@
 import { commonPostAjaxFunc, commonGetAjaxFunc } from '../GetDataService'
-import { createUserIsuueWidget } from './createUserIssueWidget'
+import { renderIsuueWidgets } from './createUserIssueWidget'
 import { createModelPopup } from '../createModal/createModalWidget'
 let containerId = ''
 function getAllUserIssue (fullurl, callback) {
@@ -10,10 +10,10 @@ function EditGitIssue (url, passData) {
 }
 function createUserissueSection (container, fullUrl) {
   containerId = container
-  getAllUserIssue(fullUrl, constructIssueWidget)
+  getAllUserIssue(fullUrl, renderIssueWidget)
 }
-function constructIssueWidget (resData) {
-  createUserIsuueWidget(containerId, resData)// "userIsuueContainer"
+function renderIssueWidget (resData) {
+  renderIsuueWidgets(containerId, resData)// "userIsuueContainer"
 }
 function updateSuccessFully () {
   createModelPopup({ modalId: 'completeIssueCreation', modalHeading: 'Confirmation', ClassName: 'bg-success', modalContent: "You have successfully uodated issue in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: 'Close' })

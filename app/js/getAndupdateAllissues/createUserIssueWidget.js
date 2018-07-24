@@ -1,15 +1,13 @@
 import { dateConvertToDDMMYYY } from '../localUtility'
 const jQuery = require('jquery')
 
-function createUserIsuueWidget (containerId, resData) {
-  if (resData && resData.length) {
-    console.log(resData)
-  } else {
-    resData = [resData]
-  }
-  let issueHtml = ''
-  jQuery.each(resData, function (index, data) {
-    issueHtml = issueHtml + `  <section class="col-6 issuesection border border-secondary m-2 p-3 text-center font-weight-bold rounded" id="${data.id}" data-issue-url="${data.url}">
+function renderIsuueWidgets(containerId, resData) {
+    if (!(resData && resData.length)) {
+        resData = [resData]
+    }
+    let issueHtml = ''
+    jQuery.each(resData, function (index, data) {
+        issueHtml = issueHtml + `  <section class="col-6 issuesection border border-secondary m-2 p-3 text-center font-weight-bold rounded" id="${data.id}" data-issue-url="${data.url}">
         <a href="${data.html_url}" target="_blank">
             <h4>Issue Number : ${data.repository ? data.repository.name : 'Current'}/Isuue#${data.number}</h4>
         </a>
@@ -60,7 +58,7 @@ function createUserIsuueWidget (containerId, resData) {
             <button type="button" class="btn btn-primary px-5 my-1 reopenThisIsuue ${data.state === 'closed' ? '' : 'd-none'}">Reopen Issue</button>
         </div>
         </section>`
-  })
-  jQuery('#' + containerId).html(issueHtml)
+    })
+    jQuery('#' + containerId).html(issueHtml)
 }
-export { createUserIsuueWidget }
+export { renderIsuueWidgets }
