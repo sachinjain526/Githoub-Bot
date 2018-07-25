@@ -1,5 +1,4 @@
 import { createGitRepository } from './widget/createRepoWidgets';
-// createRepoWidget,createGitRepository
 import { createGitIssue } from './widget/createIssueWidgets';
 import { createUserissueSection, EditGitIssue } from './getAndupdateAllissues/getAndupdateAllissues';
 import createModelPopup from './createModal/createModalWidget';
@@ -25,10 +24,10 @@ function CreateRpeoAndIssueWidget(recastData) {
         });
       }
     } else if (value.slug === 'create-issue') {
-      const issueTitle = recastData.entities.issue;
-      const repoName = recastData.entities.repository;
+      const issueTitle = recastData.entities.issue ? recastData.entities.issue[0].value : '';
+      const repoName = recastData.entities.repository ? recastData.entities.repository[0].value : '';
       if (issueTitle && repoName) {
-        store.dispatch(showIsuueWidget({ repoName: repoName[0].value, title: issueTitle[0].value }));
+        store.dispatch(showIsuueWidget({ repoName, title: issueTitle }));
       } else {
         createModelPopup({
           modalId: 'errorModal', modalHeading: 'Error', ClassName: 'bg-danger text-white', modalContent: 'please write valid query for issue creation', buttonName: 'Ok',
