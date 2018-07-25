@@ -1,12 +1,15 @@
-import { createRepoWidgets, createGitRepository } from './widget/createRepoWidgets'
+import { createGitRepository } from './widget/createRepoWidgets'
 // createRepoWidget,createGitRepository
-import { createIssueWidgets, createGitIssue } from './widget/createIssueWidgets'
+import { createGitIssue } from './widget/createIssueWidgets'
 import { createUserissueSection, EditGitIssue } from './getAndUpdateAllIssues/getAndUpdateAllIssues'
-import { createModelPopup, createFormPopup } from './createModal/createModalWidget'
+import { createModelPopup } from './createModal/createModalWidget'
 import { getInputFromRecastAPi } from './GetDataService'
 import { repoCreateJson, issueCreateJson, gitBaseUrl } from './KeyAndPath'
-import { getFormData, makeFormEditable, setDataToLocalStorage } from './localUtility'
-import { updateCollboraters } from './collaboratorModule/updateCollboraters'
+import { getFormData, makeFormEditable } from './localUtility'
+import { updateCollboratersService } from './collaboratorModule/updateCollboratersService'
+import { store } from "./reduxStore"
+import { showRepoWidget, showIsuueWidget, showCollboratorWidget } from './actions';
+
 const jQuery = require('jquery')
 
 // event listener start from here
@@ -66,8 +69,12 @@ function eventListener() {
     EditGitIssue(url, { state: 'open' })
   })
   jQuery('#mainNavBar').on('click', '#AddCollaborators', function () {
-    createFormPopup({ modalId: 'CollaboraterActions', modalHeading: 'Collaborater Form', submitCallback: addCollaboraterInRepo, formData: {} })
-  })
+    store.dispatch(showCollboratorWidget({}));
+  });
+  jQuery(document).on('click', '#collaboratorSubmit', function () {
+    let formData = getFormData("collaboratorWidget");
+    updateCollboratersService(formData)
+  });
 }
 // callback function for service
 function CreateRpeoAndIssueWidget(recastData) {
@@ -75,9 +82,7 @@ function CreateRpeoAndIssueWidget(recastData) {
     if (value.slug === 'create-repo') {
       const repoName = recastData.entities.repository
       if (repoName) {
-        jQuery('#repoWidget').remove()
-        createRepoWidgets(repoName[0].value)
-        setDataToLocalStorage('repoWidget', repoName[0].value)
+        store.dispatch(showRepoWidget({ 'repoName': repoName[0].value }));
       } else {
         createModelPopup({ modalId: 'errorModal', modalHeading: 'Error', ClassName: 'bg-danger text-white', modalContent: 'please write valid query for repository creation.', buttonName: 'Ok' })
       }
@@ -85,9 +90,7 @@ function CreateRpeoAndIssueWidget(recastData) {
       const issueTitle = recastData.entities.issue
       const repoName = recastData.entities.repository
       if (issueTitle && repoName) {
-        jQuery('#issueWidget').remove()
-        createIssueWidgets(issueTitle[0].value, repoName[0].value)
-        setDataToLocalStorage('issueWidget', JSON.stringify({ 'repoName': repoName[0].value, 'title': issueTitle[0].value }))
+        store.dispatch(showIsuueWidget({ 'repoName': repoName[0].value, 'title': issueTitle[0].value }));
       } else {
         createModelPopup({ modalId: 'errorModal', modalHeading: 'Error', ClassName: 'bg-danger text-white', modalContent: 'please write valid query for issue creation', buttonName: 'Ok' })
       }
@@ -119,16 +122,9 @@ function CreateRpeoAndIssueWidget(recastData) {
     } else if (value.slug === 'add-collaborator') {
       const action = recastData.entities.action ? recastData.entities.action[0].value : 'PATCH'
       const repoName = recastData.entities.repository ? recastData.entities.repository[0].value : ''
-      const newcollab = recastData.entities.newcollab ? recastData.entities.newcollab[0].value : ''
-      createFormPopup({ modalId: 'CollaboraterActions', modalHeading: 'Collaborater Form', submitCallback: addCollaboraterInRepo, formData: { action, repoName, newcollab } })
+      const collaboratorName = recastData.entities.newcollab ? recastData.entities.newcollab[0].value : ''
+      store.dispatch(showCollboratorWidget({ action: action, repoName: repoName, collaboratorName: collaboratorName }));
     }
-  })
-}
-function addCollaboraterInRepo(modelId) {
-  let formData = getFormData(modelId)
-  updateCollboraters(formData)
-  jQuery('#' + modelId).on('hidden.bs.modal', function () {
-    jQuery(this).remove()
   })
 }
 

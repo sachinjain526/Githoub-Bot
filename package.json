@@ -28,6 +28,7 @@
     "style-loader": "^0.21.0"
   },
   "devDependencies": {
+    "babel-preset-stage-0": "^6.24.1",
     "copy-webpack-plugin": "^4.5.2",
     "eslint": "^5.2.0",
     "eslint-config-standard": "^11.0.0",

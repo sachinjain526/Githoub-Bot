@@ -3,7 +3,7 @@ import { createModelPopup } from '../createModal/createModalWidget'
 import { getErrorDescription } from '../localUtility'
 const jQuery = require('jquery')
 
-function updateCollboraters(collaborator) {
+function updateCollboratersService(collaborator) {
   /// repos/sachinjain526/sachin-jain/collaborators/sskeet
   jQuery.ajax({
     header: { 'Content-Length': 0 },
@@ -21,4 +21,4 @@ function updateCollboraters(collaborator) {
 function collaboratorCallback() {
   createModelPopup({ modalId: 'collaboraterAddedSuccesfully', modalHeading: 'Confirmation', ClassName: 'bg-success', modalContent: 'You have successfully uodated repositories collaborater in the gitHub <span class="text-success"> For More Info Please Visit: www.github.com</span>', buttonName: 'Close' })
 }
-export { updateCollboraters }
+export { updateCollboratersService }
