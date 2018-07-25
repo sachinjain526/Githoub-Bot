@@ -1,12 +1,13 @@
-const jQuery = require('jquery');
 import 'popper.js';
 import 'bootstrap';
-import { eventListener } from './EventListener';
-import { onLoadEventToFetchData } from './onloadrendering';
+import eventListener from './EventListener';
+import onLoadEventToFetchData from './onloadrendering';
+
+const jQuery = require('jquery');
 require('./AjaxSetting');
 require('../scss/main.scss');
 
-jQuery(document).ready(function () {
-  onLoadEventToFetchData()
-  eventListener()
-})
+jQuery(document).ready(() => {
+  onLoadEventToFetchData();
+  eventListener();
+});

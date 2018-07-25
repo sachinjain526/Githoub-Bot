@@ -1,17 +1,22 @@
-import { showRepoWidget, showIsuueWidget, CREATE_ISSUE, CREATE_REPO, showCollboratorWidget, ADD_COLLABORATOR } from './actions'
-import { store } from './reduxStore';
-import { createAlluserRepos } from './getAlluserRepos/getAlluserRepos';
+import {
+  showRepoWidget, showIsuueWidget, CREATE_ISSUE, CREATE_REPO,
+  showCollboratorWidget, ADD_COLLABORATOR,
+} from './actions';
+import store from './reduxStore';
+import createAlluserRepos from './getAlluserRepos/getAlluserRepos';
 import { getDataToLocalStorage, setDataToLocalStorage } from './localUtility';
-import { createRepoWidgets } from './widget/createRepoWidgets'
+import { createRepoWidgets } from './widget/createRepoWidgets';
 import { createIssueWidgets } from './widget/createIssueWidgets';
-import { createCollaboratorWidgets } from "./collaboratorModule/collboratorView";
+import createCollaboratorWidgets from './collaboratorModule/collboratorView';
+
 const jQuery = require('jquery');
+
 function onLoadEventToFetchData() {
   const createRepoName = getDataToLocalStorage('repoWidget');
   const createIssueObj = getDataToLocalStorage('issueWidget');
   const collaboratorObj = getDataToLocalStorage('collaboratorWidget');
   if (createRepoName) {
-    store.dispatch(showRepoWidget({ 'repoName': createRepoName }));
+    store.dispatch(showRepoWidget({ repoName: createRepoName }));
   }
   if (createIssueObj) {
     store.dispatch(showIsuueWidget(JSON.parse(createIssueObj)));
@@ -19,7 +24,7 @@ function onLoadEventToFetchData() {
   if (collaboratorObj) {
     store.dispatch(showCollboratorWidget(JSON.parse(collaboratorObj)));
   }
-  createAlluserRepos('userRepoSection')
+  createAlluserRepos('userRepoSection');
 }
 store.subscribe(() => {
   const curentState = store.getState();
@@ -38,5 +43,5 @@ store.subscribe(() => {
     setDataToLocalStorage('collaboratorWidget', JSON.stringify(curentState.collaboratorWidget));
     createCollaboratorWidgets(curentState.collaboratorWidget);
   }
-})
-export { onLoadEventToFetchData }
+});
+export default onLoadEventToFetchData;

@@ -1,7 +1,8 @@
 const jQuery = require('jquery');
+
 function createCollaboratorWidgets(collaboratorData) {
-    jQuery('#widgetSection').prepend(`
-        <div class="p-3 my-3 mx-auto border border-info rounded" id="collaboratorWidget">
+  jQuery('#widgetSection').prepend(`
+    <div class="p-3 my-3 mx-auto border border-info rounded" id="collaboratorWidget">
             <h3 class="text-center mt-2 mb-4 text-danger"> Create Collaborator </h3>
             <form method="post" action="#" class="w-100 text-center">
                 <div class="form-group row">
@@ -30,7 +31,6 @@ function createCollaboratorWidgets(collaboratorData) {
                     <button type="button" class="btn btn-danger cancelWidget" id="collaboratorClose" data-dismiss="modal">Close</button>
                 </div>
             </form>         
-        </div>`
-    );
+        </div>`);
 }
-export { createCollaboratorWidgets };
+export default createCollaboratorWidgets;

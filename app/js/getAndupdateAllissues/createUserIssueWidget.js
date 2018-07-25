@@ -1,13 +1,15 @@
-import { dateConvertToDDMMYYY } from '../localUtility'
-const jQuery = require('jquery')
+import { dateConvertToDDMMYYY } from '../localUtility';
 
-function renderIsuueWidgets(containerId, resData) {
-    if (!(resData && resData.length)) {
-        resData = [resData]
-    }
-    let issueHtml = ''
-    jQuery.each(resData, function (index, data) {
-        issueHtml = issueHtml + `  <section class="col-6 issuesection border border-secondary m-2 p-3 text-center font-weight-bold rounded" id="${data.id}" data-issue-url="${data.url}">
+const jQuery = require('jquery');
+
+function renderIsuueWidgets(containerId, issues) {
+  let resData = [];
+  if (!(issues && issues.length)) {
+    resData = [issues];
+  }
+  let issueHtml = '';
+  jQuery.each(resData, (index, data) => {
+    issueHtml = `${issueHtml}  <section class="col-6 issuesection border border-secondary m-2 p-3 text-center font-weight-bold rounded" id="${data.id}" data-issue-url="${data.url}">
         <a href="${data.html_url}" target="_blank">
             <h4>Issue Number : ${data.repository ? data.repository.name : 'Current'}/Isuue#${data.number}</h4>
         </a>
@@ -57,8 +59,8 @@ function renderIsuueWidgets(containerId, resData) {
             <button type="button" class="btn btn-danger px-5 my-1 closeThisIsuue ${data.state !== 'closed' ? '' : 'd-none'}" >Close Issue</button>
             <button type="button" class="btn btn-primary px-5 my-1 reopenThisIsuue ${data.state === 'closed' ? '' : 'd-none'}">Reopen Issue</button>
         </div>
-        </section>`
-    })
-    jQuery('#' + containerId).html(issueHtml)
+        </section>`;
+  });
+  jQuery(`#${containerId}`).html(issueHtml);
 }
-export { renderIsuueWidgets }
+export default renderIsuueWidgets;

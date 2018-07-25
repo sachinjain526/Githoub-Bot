@@ -1,22 +1,28 @@
-import { commonPostAjaxFunc, commonGetAjaxFunc } from '../GetDataService'
-import { renderIsuueWidgets } from './createUserIssueWidget'
-import { createModelPopup } from '../createModal/createModalWidget'
-let containerId = ''
-function getAllUserIssue (fullurl, callback) {
-  commonGetAjaxFunc(fullurl, callback)
+import { commonPostAjaxFunc, commonGetAjaxFunc } from '../GetDataService';
+import renderIsuueWidgets from './createUserIssueWidget';
+import createModelPopup from '../createModal/createModalWidget';
+
+let containerId = '';
+
+function renderIssueWidget(resData) {
+  renderIsuueWidgets(containerId, resData);// "userIsuueContainer"
 }
-function EditGitIssue (url, passData) {
-  commonPostAjaxFunc(url, 'patch', passData, updateSuccessFully)
+
+function updateSuccessFully() {
+  createModelPopup({
+    modalId: 'completeIssueCreation', modalHeading: 'Confirmation', ClassName: 'bg-success', modalContent: "You have successfully uodated issue in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: 'Close',
+  });
 }
-function createUserissueSection (container, fullUrl) {
-  containerId = container
-  getAllUserIssue(fullUrl, renderIssueWidget)
+function getAllUserIssue(fullurl, callback) {
+  commonGetAjaxFunc(fullurl, callback);
 }
-function renderIssueWidget (resData) {
-  renderIsuueWidgets(containerId, resData)// "userIsuueContainer"
+
+function EditGitIssue(url, passData) {
+  commonPostAjaxFunc(url, 'patch', passData, updateSuccessFully);
 }
-function updateSuccessFully () {
-  createModelPopup({ modalId: 'completeIssueCreation', modalHeading: 'Confirmation', ClassName: 'bg-success', modalContent: "You have successfully uodated issue in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: 'Close' })
-  //  createUserissueSection("userIsuueContainer", gitBaseUrl + "user/issues?filter=all&state=all");
+function createUserissueSection(container, fullUrl) {
+  containerId = container;
+  getAllUserIssue(fullUrl, renderIssueWidget);
 }
-export { createUserissueSection, EditGitIssue }
+
+export { createUserissueSection, EditGitIssue };

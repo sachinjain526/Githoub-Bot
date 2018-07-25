@@ -1,7 +1,7 @@
-const jQuery = require('jquery')
+const jQuery = require('jquery');
 
 function createModelPopup(data) { // headername modelId
-    jQuery('body').append(`<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="${data.modalId}">
+  jQuery('body').append(`<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="${data.modalId}">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <!-- Modal Header -->
@@ -23,12 +23,12 @@ function createModelPopup(data) { // headername modelId
 
         </div>
     </div>
-    </div>`)
-    jQuery('#' + data.modalId).modal('show')
-    jQuery(document).on('click', '.modalSubmit', function () {
-        if (data.submitCallback) {
-            data.submitCallback(data.modalId)
-        }
-    })
+    </div>`);
+  jQuery(`#${data.modalId}`).modal('show');
+  jQuery(document).on('click', '.modalSubmit', () => {
+    if (data.submitCallback) {
+      data.submitCallback(data.modalId);
+    }
+  });
 }
-export { createModelPopup }
+export default createModelPopup;
