@@ -8,9 +8,6 @@ import { getDataToLocalStorage, setDataToLocalStorage } from './localUtility';
 import createRepoWidgets from './repoWidgets/repoWidgets';
 import createIssueWidgets from './issueWidgets/issueWidgets';
 import createCollaboratorWidgets from './collaboratorWidgets/collaboratorWidgets';
-
-const jQuery = require('jquery');
-
 function onLoadEventToFetchData() {
   const createRepoName = getDataToLocalStorage('repoWidget');
   const createIssueObj = getDataToLocalStorage('issueWidget');
@@ -29,17 +26,14 @@ function onLoadEventToFetchData() {
 function renderWidgets() {
   const curentState = store.getState();
   if (curentState.repoWidget && curentState.action === CREATE_REPO) {
-    jQuery('#repoWidget').remove();
     setDataToLocalStorage('repoWidget', curentState.repoWidget.repoName);
     createRepoWidgets(curentState.repoWidget.repoName);
   }
   if (curentState.issueWidget && curentState.action === CREATE_ISSUE) {
-    jQuery('#issueWidget').remove();
     setDataToLocalStorage('issueWidget', JSON.stringify(curentState.issueWidget));
     createIssueWidgets(curentState.issueWidget.title, curentState.issueWidget.repoName);
   }
   if (curentState.collaboratorWidget && curentState.action === ADD_COLLABORATOR) {
-    jQuery('#collaboratorWidget').remove();
     setDataToLocalStorage('collaboratorWidget', JSON.stringify(curentState.collaboratorWidget));
     createCollaboratorWidgets(curentState.collaboratorWidget);
   }
