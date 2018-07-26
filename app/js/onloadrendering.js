@@ -3,11 +3,12 @@ import {
   showCollboratorWidget, ADD_COLLABORATOR,
 } from './actions';
 import store from './reduxStore';
-import createAlluserRepos from './getAlluserRepos/getAlluserRepos';
+import createAlluserRepos from './getAlluserRepos/userReposServices';
 import { getDataToLocalStorage, setDataToLocalStorage } from './localUtility';
-import createRepoWidgets from './repoWidgets/repoWidgets';
-import createIssueWidgets from './issueWidgets/issueWidgets';
-import createCollaboratorWidgets from './collaboratorWidgets/collaboratorWidgets';
+import createRepoWidgets from './repoWidgets/repoWidgetsView';
+import createIssueWidgets from './issueWidgets/issueWidgetsView';
+import createCollaboratorWidgets from './collaboratorWidgets/collaboratorWidgetsView';
+
 function onLoadEventToFetchData() {
   const createRepoName = getDataToLocalStorage('repoWidget');
   const createIssueObj = getDataToLocalStorage('issueWidget');

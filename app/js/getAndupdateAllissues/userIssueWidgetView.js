@@ -6,6 +6,8 @@ function renderIsuueWidgets(containerId, issues) {
   let resData = [];
   if (!(issues && issues.length)) {
     resData = [issues];
+  } else {
+    resData = issues;
   }
   let issueHtml = '';
   jQuery.each(resData, (index, data) => {

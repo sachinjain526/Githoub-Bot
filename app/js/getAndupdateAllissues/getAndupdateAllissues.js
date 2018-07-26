@@ -1,5 +1,5 @@
 import { commonPostAjaxFunc, commonGetAjaxFunc } from '../GetDataService';
-import renderIsuueWidgets from './createUserIssueWidget';
+import renderIsuueWidgets from './userIssueWidgetView';
 import createModelPopup from '../createModal/createModalWidget';
 
 let containerId = '';

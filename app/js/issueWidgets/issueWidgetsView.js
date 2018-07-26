@@ -1,8 +1,9 @@
 const jQuery = require('jquery');
 
 function createIssueWidgets(data, repoName) {
+  jQuery(`#issueWidget-${repoName}`).remove();
   jQuery('#widgetSection').prepend(`
-        <div class="p-3 my-3 mx-auto border border-info rounded issueWidget" id="issueWidget-${repoName}">
+        <div class="p-3 my-3 mx-auto border border-info rounded openWidget" id="issueWidget-${repoName}" repo="${repoName}">
             <h3 class="text-center mt-2 mb-4 text-danger"> Create Issue </h3>
                 <form method="post" action="#" class="w-100 text-center">
                     <div class="form-group row">
@@ -24,12 +25,11 @@ function createIssueWidgets(data, repoName) {
                         </div>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-primary createIssue" key="${repoName}" >Create Isuue</button>
+                        <button type="button" class="btn btn-primary createIssue">Create Isuue</button>
                         <button type="button" class="btn btn-danger cancelWidget" id="cancelIssueWidget">Cancel</button>
                     </div>
                 </form>
             </div> `);
 }
-
 
 export default createIssueWidgets;

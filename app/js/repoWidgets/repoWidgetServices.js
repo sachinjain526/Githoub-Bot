@@ -1,7 +1,7 @@
 import { commonPostAjaxFunc } from '../GetDataService';
 import { gitBaseUrl } from '../KeyAndPath';
 import createModelPopup from '../createModal/createModalWidget';
-import renderUserRepos from '../getAlluserRepos/renderUserRepos';
+import renderUserRepos from '../getAlluserRepos/userReposServices';
 
 function completeRepoCreation(repoData) {
   createModelPopup({

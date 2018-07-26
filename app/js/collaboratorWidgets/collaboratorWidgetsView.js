@@ -1,8 +1,9 @@
 const jQuery = require('jquery');
 
 function createCollaboratorWidgets(collaboratorData) {
+  jQuery(`#collaboratorWidget-${collaboratorData.repoName}-${collaboratorData.collaboratorName}`).remove();
   jQuery('#widgetSection').prepend(`
-    <div class="p-3 my-3 mx-auto border border-info rounded" id="collaboratorWidget">
+    <div class="p-3 my-3 mx-auto border border-info rounded openWidget" id="collaboratorWidget-${collaboratorData.repoName}-${collaboratorData.collaboratorName}">
             <h3 class="text-center mt-2 mb-4 text-danger"> Create Collaborator </h3>
             <form method="post" action="#" class="w-100 text-center">
                 <div class="form-group row">
@@ -27,8 +28,8 @@ function createCollaboratorWidgets(collaboratorData) {
                     </div>
                 </div>
                 <div class="form-group text-center ">
-                    <button type="button" class="btn btn-success" id="collaboratorSubmit" data-dismiss="modal">Submit</button>
-                    <button type="button" class="btn btn-danger cancelWidget" id="collaboratorClose" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success collaboratorSubmit">Submit</button>
+                    <button type="button" class="btn btn-danger cancelWidget" id="collaboratorClose">Close</button>
                 </div>
             </form>         
         </div>`);

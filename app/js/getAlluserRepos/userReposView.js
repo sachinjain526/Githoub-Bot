@@ -6,6 +6,8 @@ function renderUserRepos(conatinerId, userRepos) {
   let userRepoData = [];
   if (!(userRepos && userRepos.length)) {
     userRepoData = [userRepos];
+  } else {
+    userRepoData = userRepos;
   }
   let thisHtml = '';
   jQuery.each(userRepoData, (index, value) => {

@@ -1,5 +1,5 @@
 
-import renderUserRepos from './renderUserRepos';
+import renderUserRepos from './userReposView';
 import { commonGetAjaxFunc } from '../GetDataService';
 import { gitBaseUrl } from '../KeyAndPath';
 

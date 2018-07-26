@@ -73,24 +73,37 @@ function eventListener() {
     getInputFromRecastAPi(inputValue, CreateRpeoAndIssueWidget);
   });
   jQuery('main').on('click', '.createRepo', function () {
-    const keyValue = jQuery(this).attr('key');
-    const formData = getFormData(`repoWidget-${keyValue}`);
+    const parentElem = jQuery(this).parents('.openWidget');
+    const parentId = parentElem.attr('id');
+    const formData = getFormData(parentId);
     const thisData = jQuery.extend(true, {}, repoCreateJson, formData);
     createGitRepository(thisData);
-    jQuery(this).parents('.container').remove();
+    parentElem.remove();
   });
   jQuery('main').on('click', '.createIssue', function () {
-    const getRepoName = jQuery(this).attr('key');
-    const formData = getFormData(`issueWidget-${getRepoName}`);
+    const parentElem = jQuery(this).parents('.openWidget');
+    const parentId = parentElem.attr('id');
+    const getRepoName = parentElem.attr('repo');
+    const formData = getFormData(parentId);
     const thisData = jQuery.extend(true, {}, issueCreateJson, formData);
     createGitIssue(thisData, getRepoName);
-    jQuery(this).parents('.container').remove();
+    parentElem.remove();
+  });
+  jQuery('main').on('click', '.collaboratorSubmit', function () {
+    const parentElem = jQuery(this).parents('.openWidget');
+    const parentId = parentElem.attr('id');
+    const formData = getFormData(parentId);
+    updateCollboratersService(formData);
+    parentElem.remove();
+  });
+  jQuery('main').on('click', '.cancelWidget', function () {
+    jQuery(this).parents('.openWidget').remove();
   });
   jQuery('#mainNavBar').on('click', '#AllIssue', () => {
     createUserissueSection('userIsuueContainer', `${gitBaseUrl}user/issues?filter=all&state=all`);
   });
-  jQuery('main').on('click', '.cancelWidget', function () {
-    jQuery(this).parents('.container').remove();
+  jQuery('#mainNavBar').on('click', '#AddCollaborators', () => {
+    store.dispatch(showCollboratorWidget({}));
   });
   jQuery('body').on('click', '.modalClose', function () {
     const modalId = jQuery(this).parents('.modal').attr('id');
@@ -122,13 +135,6 @@ function eventListener() {
     const thisObj = jQuery(this);
     const url = thisObj.parent().attr('api-url');
     EditGitIssue(url, { state: 'open' });
-  });
-  jQuery('#mainNavBar').on('click', '#AddCollaborators', () => {
-    store.dispatch(showCollboratorWidget({}));
-  });
-  jQuery(document).on('click', '#collaboratorSubmit', () => {
-    const formData = getFormData('collaboratorWidget');
-    updateCollboratersService(formData);
   });
 }
 
