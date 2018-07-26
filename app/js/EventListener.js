@@ -1,11 +1,11 @@
-import { createGitRepository } from './widget/createRepoWidgets';
-import { createGitIssue } from './widget/createIssueWidgets';
+import createGitRepository from './repoWidgets/repoWidgetServices';
+import createGitIssue from './issueWidgets/issueWidgetServices';
 import { createUserissueSection, EditGitIssue } from './getAndupdateAllissues/getAndupdateAllissues';
 import createModelPopup from './createModal/createModalWidget';
 import { getInputFromRecastAPi } from './GetDataService';
 import { repoCreateJson, issueCreateJson, gitBaseUrl } from './KeyAndPath';
 import { getFormData, makeFormEditable } from './localUtility';
-import updateCollboratersService from './collaboratorModule/updateCollboratersService';
+import updateCollboratersService from './collaboratorWidgets/updateCollboratersService';
 import store from './reduxStore';
 import { showRepoWidget, showIsuueWidget, showCollboratorWidget } from './actions';
 
@@ -72,15 +72,16 @@ function eventListener() {
     const inputValue = jQuery('#queryInput').val();
     getInputFromRecastAPi(inputValue, CreateRpeoAndIssueWidget);
   });
-  jQuery('main').on('click', '#createRepo', function () {
-    const formData = getFormData('repoWidget');
+  jQuery('main').on('click', '.createRepo', function () {
+    const keyValue = jQuery(this).attr('key');
+    const formData = getFormData(`repoWidget-${keyValue}`);
     const thisData = jQuery.extend(true, {}, repoCreateJson, formData);
     createGitRepository(thisData);
     jQuery(this).parents('.container').remove();
   });
-  jQuery('main').on('click', '#createIssue', function () {
-    const formData = getFormData('issueWidget');
-    const getRepoName = jQuery('#repositoryName').text();
+  jQuery('main').on('click', '.createIssue', function () {
+    const getRepoName = jQuery(this).attr('key');
+    const formData = getFormData(`issueWidget-${getRepoName}`);
     const thisData = jQuery.extend(true, {}, issueCreateJson, formData);
     createGitIssue(thisData, getRepoName);
     jQuery(this).parents('.container').remove();

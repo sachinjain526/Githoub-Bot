@@ -5,9 +5,9 @@ import {
 import store from './reduxStore';
 import createAlluserRepos from './getAlluserRepos/getAlluserRepos';
 import { getDataToLocalStorage, setDataToLocalStorage } from './localUtility';
-import { createRepoWidgets } from './widget/createRepoWidgets';
-import { createIssueWidgets } from './widget/createIssueWidgets';
-import createCollaboratorWidgets from './collaboratorModule/collboratorView';
+import createRepoWidgets from './repoWidgets/repoWidgets';
+import createIssueWidgets from './issueWidgets/issueWidgets';
+import createCollaboratorWidgets from './collaboratorWidgets/collaboratorWidgets';
 
 const jQuery = require('jquery');
 
@@ -26,7 +26,7 @@ function onLoadEventToFetchData() {
   }
   createAlluserRepos('userRepoSection');
 }
-store.subscribe(() => {
+function renderWidgets() {
   const curentState = store.getState();
   if (curentState.repoWidget && curentState.action === CREATE_REPO) {
     jQuery('#repoWidget').remove();
@@ -43,5 +43,6 @@ store.subscribe(() => {
     setDataToLocalStorage('collaboratorWidget', JSON.stringify(curentState.collaboratorWidget));
     createCollaboratorWidgets(curentState.collaboratorWidget);
   }
-});
+}
+store.subscribe(renderWidgets);
 export default onLoadEventToFetchData;
