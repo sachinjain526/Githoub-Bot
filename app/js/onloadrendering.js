@@ -10,11 +10,11 @@ import createIssueWidgets from './issueWidgets/issueWidgetsView';
 import createCollaboratorWidgets from './collaboratorWidgets/collaboratorWidgetsView';
 
 function onLoadEventToFetchData() {
-  const createRepoName = getDataToLocalStorage('repoWidget');
+  const createRepoObj = getDataToLocalStorage('repoWidget');
   const createIssueObj = getDataToLocalStorage('issueWidget');
   const collaboratorObj = getDataToLocalStorage('collaboratorWidget');
-  if (createRepoName) {
-    store.dispatch(showRepoWidget({ repoName: createRepoName }));
+  if (createRepoObj) {
+    store.dispatch(showRepoWidget(JSON.parse(createRepoObj)));
   }
   if (createIssueObj) {
     store.dispatch(showIsuueWidget(JSON.parse(createIssueObj)));
@@ -27,7 +27,7 @@ function onLoadEventToFetchData() {
 function renderWidgets() {
   const curentState = store.getState();
   if (curentState.repoWidget && curentState.action === CREATE_REPO) {
-    setDataToLocalStorage('repoWidget', curentState.repoWidget.repoName);
+    setDataToLocalStorage('repoWidget', JSON.stringify(curentState.repoWidget));
     createRepoWidgets(curentState.repoWidget.repoName);
   }
   if (curentState.issueWidget && curentState.action === CREATE_ISSUE) {

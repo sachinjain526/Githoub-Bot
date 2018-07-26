@@ -1,12 +1,12 @@
 const jQuery = require('jquery');
 
 function createModelPopup(data) { // headername modelId
-  jQuery('body').append(`<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="${data.modalId}">
+  jQuery('body').append(`<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" id="${data.modalId}">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header ${data.ClassName}">
-            <h4 class="modal-title"> ${data.modalHeading}</h4>
+            <h4 class="modal-title" id="exampleModalLabel"> ${data.modalHeading}</h4>
             <button type="button" class="close modalClose" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
              </button>

@@ -45,7 +45,14 @@ function setDataToLocalStorage(key, value) {
 function getDataToLocalStorage(key) {
   return localStorage[key];
 }
-
+function generateRandomId() {
+  let text = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  for (let i = 0; i < 8; i += 1) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
 function getErrorDescription(statusCode) {
   let statusDesc = '';
   switch (statusCode) {
@@ -73,6 +80,7 @@ function getErrorDescription(statusCode) {
   return statusDesc;
 }
 export {
+  generateRandomId,
   getFormData,
   makeFormEditable,
   dateConvertToDDMMYYY,

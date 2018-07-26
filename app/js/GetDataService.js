@@ -1,4 +1,4 @@
-import { gitApiToken } from './KeyAndPath';
+import { gitApiToken, baseUrl } from './KeyAndPath';
 import { getErrorDescription } from './localUtility';
 import createModelPopup from './createModal/createModalWidget';
 
@@ -55,5 +55,34 @@ function getInputFromRecastAPi(input, callback) {
     });
   });
 }
-
-export { commonGetAjaxFunc, commonPostAjaxFunc, getInputFromRecastAPi };
+function getHistory(callback) {
+  jQuery.ajax({
+    url: `${baseUrl}history`,
+    method: 'get',
+    dataType: 'json',
+  }).done((ResData) => {
+    callback(ResData);
+  }).fail((jqXHR) => {
+    createModelPopup({
+      modalId: 'errorModal', modalHeading: `Error-${jqXHR.status}`, ClassName: 'bg-danger text-white', modalContent: 'There is something missing to update history', buttonName: 'Ok',
+    });
+  });
+}
+function updateHistory(method, historyId) {
+  jQuery.ajax({
+    url: `${baseUrl}history/${historyId}`,
+    method,
+    dataType: 'json',
+  }).done(() => {
+    createModelPopup({
+      modalId: 'historymade', modalHeading: 'Confirmation', ClassName: 'bg-success', modalContent: 'You have successfully updated history ', buttonName: 'Close',
+    });
+  }).fail((jqXHR) => {
+    createModelPopup({
+      modalId: 'errorModal', modalHeading: `Error-${jqXHR.status}`, ClassName: 'bg-danger text-white', modalContent: 'There is something missing to update history', buttonName: 'Ok',
+    });
+  });
+}
+export {
+  commonGetAjaxFunc, commonPostAjaxFunc, getInputFromRecastAPi, getHistory, updateHistory,
+};
