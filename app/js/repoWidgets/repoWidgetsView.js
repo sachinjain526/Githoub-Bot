@@ -1,12 +1,25 @@
-const jQuery = require('jquery');
+import jQuery from 'jquery';
+import { generateRandomId, dateConvertToDDMMYYY } from '../localUtility';
+import { saveHistory } from '../GetDataService';
+
+function saveDataInHistory(passedData) {
+    const postData = {
+        crreatedAt: dateConvertToDDMMYYY(new Date()),
+        result: null,
+        ...passedData,
+    };
+    saveHistory(postData);
+}
 
 function createRepoWidgets(repoData) {
-    let componentId = "";
+    let componentId = '';
     if (repoData && repoData.id) {
         componentId = repoData.id;
     } else {
         componentId = generateRandomId();
     }
+    const passedData = { ...repoData, id: componentId };
+    saveDataInHistory(passedData);
     jQuery('#widgetSection').prepend(`
         <div class="p-3 my-3 mx-auto border border-info rounded openWidget" id="repoWidget-${componentId}">
             <h3 class="text-center mt-2 mb-4 text-danger"> Create Repository </h3>

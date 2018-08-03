@@ -1,12 +1,24 @@
-const jQuery = require('jquery');
-import { generateRandomId } from "../localUtility"
+import jQuery from 'jquery';
+import { generateRandomId, dateConvertToDDMMYYY } from '../localUtility';
+import { saveHistory } from '../GetDataService';
+
+function saveDataInHistory(passedData) {
+    const postData = {
+        crreatedAt: dateConvertToDDMMYYY(new Date()),
+        result: null,
+        ...passedData,
+    };
+    saveHistory(postData);
+}
 function createCollaboratorWidgets(collaboratorData) {
-    let componentId = "";
+    let componentId = '';
     if (collaboratorData && collaboratorData.id) {
         componentId = collaboratorData.id;
     } else {
         componentId = generateRandomId();
     }
+    const passedData = { ...collaboratorData, id: componentId };
+    saveDataInHistory(passedData);
     jQuery('#widgetSection').prepend(`
     <div class="p-3 my-3 mx-auto border border-info rounded openWidget" id="collaboratorWidget-${componentId}">
             <h3 class="text-center mt-2 mb-4 text-danger"> Create Collaborator </h3>
