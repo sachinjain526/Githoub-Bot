@@ -4,7 +4,8 @@ import { saveHistory } from '../GetDataService';
 
 function saveDataInHistory(passedData) {
     const postData = {
-        crreatedAt: dateConvertToDDMMYYY(new Date()),
+        createDate: dateConvertToDDMMYYY(new Date()),
+        modifiedDate: dateConvertToDDMMYYY(new Date()),
         result: null,
         ...passedData,
     };
@@ -17,9 +18,9 @@ function createIssueWidgets(issueData) {
         componentId = issueData.id;
     } else {
         componentId = generateRandomId();
+        const passedData = { ...issueData, id: componentId };
+        saveDataInHistory(passedData);
     }
-    const passedData = { ...issueData, id: componentId };
-    saveDataInHistory(passedData);
     jQuery('#widgetSection').prepend(`
         <div class="p-3 my-3 mx-auto border border-info rounded openWidget" id="issueWidget-${componentId}" repo="${issueData.repoName}">
             <h3 class="text-center mt-2 mb-4 text-danger"> Create Issue </h3>

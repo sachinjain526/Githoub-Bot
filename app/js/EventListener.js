@@ -13,27 +13,39 @@ const jQuery = require('jquery');
 
 // callback function for service
 function CreateRpeoAndIssueWidget(recastData) {
+  const { source } = recastData;
   jQuery.each(recastData.intents, (index, value) => {
-    if (value.slug === 'create-repo') {
+    const intent = value.slug;
+    if (intent === 'create-repo') {
       const repoName = recastData.entities.repository;
       if (repoName) {
-        store.dispatch(showRepoWidget({ repoName: repoName[0].value }));
+        store.dispatch(showRepoWidget({ repoName: repoName[0].value, source, intent }));
       } else {
         createModelPopup({
-          modalId: 'errorModal', modalHeading: 'Error', ClassName: 'bg-danger text-white', modalContent: 'please write valid query for repository creation.', buttonName: 'Ok',
+          modalId: 'errorModal',
+          modalHeading: 'Error',
+          ClassName: 'bg-danger text-white',
+          modalContent: 'please write valid query for repository creation.',
+          buttonName: 'Ok',
         });
       }
-    } else if (value.slug === 'create-issue') {
+    } else if (intent === 'create-issue') {
       const issueTitle = recastData.entities.issue ? recastData.entities.issue[0].value : '';
       const repoName = recastData.entities.repository ? recastData.entities.repository[0].value : '';
       if (issueTitle && repoName) {
-        store.dispatch(showIsuueWidget({ repoName, title: issueTitle }));
+        store.dispatch(showIsuueWidget({
+          repoName, title: issueTitle, source, intent,
+        }));
       } else {
         createModelPopup({
-          modalId: 'errorModal', modalHeading: 'Error', ClassName: 'bg-danger text-white', modalContent: 'please write valid query for issue creation', buttonName: 'Ok',
+          modalId: 'errorModal',
+          modalHeading: 'Error',
+          ClassName: 'bg-danger text-white',
+          modalContent: 'please write valid query for issue creation',
+          buttonName: 'Ok',
         });
       }
-    } else if (value.slug === 'display-issue') {
+    } else if (intent === 'display-issue') {
       // / repos/sachinjain526/webapck-conf/issues
       let url = `${gitBaseUrl}repos/sachinjain526/`;
       const target = recastData.entities.target ? recastData.entities.target[0].value : '';
@@ -58,11 +70,13 @@ function CreateRpeoAndIssueWidget(recastData) {
         }
       }
       createUserissueSection('userIsuueContainer', url);
-    } else if (value.slug === 'add-collaborator') {
+    } else if (intent === 'add-collaborator') {
       const action = recastData.entities.action ? recastData.entities.action[0].value : 'PATCH';
       const repoName = recastData.entities.repository ? recastData.entities.repository[0].value : '';
       const collaboratorName = recastData.entities.newcollab ? recastData.entities.newcollab[0].value : '';
-      store.dispatch(showCollboratorWidget({ action, repoName, collaboratorName }));
+      store.dispatch(showCollboratorWidget({
+        action, repoName, collaboratorName, source, intent,
+      }));
     }
   });
 }

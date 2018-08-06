@@ -5,40 +5,41 @@ const initailState = {
   action: '',
   repoWidget: {
     repoName: '',
+    source: '',
+    intent: '',
   },
   issueWidget: {
     title: '',
     repoName: '',
+    source: '',
+    intent: '',
   },
   collaboratorWidget: {
     action: '',
     repoName: '',
     collaboratorName: '',
+    source: '',
+    intent: '',
   },
 };
 const createWidgetReducer = function (state = initailState, action) {
   if (action.type === CREATE_REPO) {
     return {
-      ...state, repoWidget: { repoName: action.payload.repoName }, action: action.type,
+      ...state,
+repoWidget: action.payload,
+      action: action.type,
     };
   } if (action.type === CREATE_ISSUE) {
     return {
       ...state,
-      issueWidget: {
-        title: action.payload.title,
-        repoName: action.payload.repoName,
-      },
+      issueWidget: action.payload,
       action: action.type,
     };
   }
   if (action.type === ADD_COLLABORATOR) {
     return {
       ...state,
-      collaboratorWidget: {
-        action: action.payload.action,
-        collaboratorName: action.payload.collaboratorName,
-        repoName: action.payload.repoName,
-      },
+      collaboratorWidget: action.payload,
       action: action.type,
     };
   }
