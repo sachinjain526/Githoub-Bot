@@ -14,14 +14,14 @@ function saveDataInHistory(passedData) {
 function createCollaboratorWidgets(collaboratorData) {
     let componentId = '';
     if (collaboratorData && collaboratorData.id) {
-        componentId = collaboratorData.id;
+        componentId = `collaboratorWidget-${collaboratorData.id}`;
     } else {
-        componentId = generateRandomId();
+        componentId = `collaboratorWidget-${generateRandomId()}`;
         const passedData = { ...collaboratorData, id: componentId };
         saveDataInHistory(passedData);
     }
     jQuery('#widgetSection').prepend(`
-    <div class="p-3 my-3 mx-auto border border-info rounded openWidget" id="collaboratorWidget-${componentId}">
+    <div class="p-3 my-3 mx-auto border border-info rounded openWidget" id="${componentId}">
             <h3 class="text-center mt-2 mb-4 text-danger"> Create Collaborator </h3>
             <form method="post" action="#" class="w-100 text-center">
                 <div class="form-group row">

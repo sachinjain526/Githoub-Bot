@@ -84,15 +84,20 @@ function saveHistory(passData) {
     });
   });
 }
-function updateHistory(method, historyId) {
+function updateHistory(method, historyId, passData, callback) {
   jQuery.ajax({
     url: `${baseUrl}history/${historyId}`,
     method,
     dataType: 'json',
-  }).done(() => {
-    createModelPopup({
-      modalId: 'historymade', modalHeading: 'Confirmation', ClassName: 'bg-success', modalContent: 'You have successfully updated history ', buttonName: 'Close',
-    });
+    data: passData,
+  }).done((response) => {
+    if (callback) {
+      callback(response);
+    }
+    // createModelPopup({
+    //   modalId: 'historymade', modalHeading: 'Confirmation', ClassName: 'bg-success',
+    //  modalContent: 'You have successfully updated history ', buttonName: 'Close',
+    // });
   }).fail((jqXHR) => {
     createModelPopup({
       modalId: 'errorModal', modalHeading: `Error-${jqXHR.status}`, ClassName: 'bg-danger text-white', modalContent: 'There is something missing to update history', buttonName: 'Ok',

@@ -2,9 +2,12 @@ import createGitRepository from './repoWidgets/repoWidgetServices';
 import createGitIssue from './issueWidgets/issueWidgetServices';
 import { createUserissueSection, EditGitIssue } from './getAndupdateAllissues/getAndupdateAllissues';
 import createModelPopup from './createModal/createModalWidget';
-import { getInputFromRecastAPi } from './GetDataService';
+import { getInputFromRecastAPi, updateHistory } from './GetDataService';
 import { repoCreateJson, issueCreateJson, gitBaseUrl } from './KeyAndPath';
-import { getFormData, makeFormEditable } from './localUtility';
+import {
+  getFormData, makeFormEditable, dateConvertToDDMMYYY,
+  createCommonClosedOrSubmitWidget,
+} from './localUtility';
 import updateCollboratersService from './collaboratorWidgets/updateCollboratersService';
 import store from './reduxStore';
 import { showRepoWidget, showIsuueWidget, showCollboratorWidget } from './actions';
@@ -58,15 +61,15 @@ function CreateRpeoAndIssueWidget(recastData) {
         if (target === 'all' || target === 'any') {
           url += '?filter=all';
           if (state) {
-            url = `${url}&state=${state}`;
+            url += `${url}&state=${state}`;
           }
         } else {
-          url = `${url}/${number}`;
+          url += `${url}/${number}`;
         }
       } else {
-        url = 'user/issues?filter=all';
+        url += 'user/issues?filter=all';
         if (state) {
-          url = `${url}&state=${state}`;
+          url += `${url}&state=${state}`;
         }
       }
       createUserissueSection('userIsuueContainer', url);
@@ -80,6 +83,9 @@ function CreateRpeoAndIssueWidget(recastData) {
     }
   });
 }
+function updateWidgetHtml(data) {
+  createCommonClosedOrSubmitWidget(data, true);
+}
 // event listener start from here
 function eventListener() {
   jQuery('#queryRunner').on('click', '#submitQuery', () => {
@@ -92,7 +98,7 @@ function eventListener() {
     const formData = getFormData(parentId);
     const thisData = jQuery.extend(true, {}, repoCreateJson, formData);
     createGitRepository(thisData);
-    parentElem.remove();
+    updateHistory('PATCH', parentId, { result: 'Submitted', modifiedDate: dateConvertToDDMMYYY(new Date()) }, updateWidgetHtml);
   });
   jQuery('main').on('click', '.createIssue', function () {
     const parentElem = jQuery(this).parents('.openWidget');
@@ -101,17 +107,19 @@ function eventListener() {
     const formData = getFormData(parentId);
     const thisData = jQuery.extend(true, {}, issueCreateJson, formData);
     createGitIssue(thisData, getRepoName);
-    parentElem.remove();
+    updateHistory('PATCH', parentId, { result: 'Submitted', modifiedDate: dateConvertToDDMMYYY(new Date()) }, updateWidgetHtml);
   });
   jQuery('main').on('click', '.collaboratorSubmit', function () {
     const parentElem = jQuery(this).parents('.openWidget');
     const parentId = parentElem.attr('id');
     const formData = getFormData(parentId);
     updateCollboratersService(formData);
-    parentElem.remove();
+    updateHistory('PATCH', parentId, { result: 'Submitted', modifiedDate: dateConvertToDDMMYYY(new Date()) }, updateWidgetHtml);
   });
   jQuery('main').on('click', '.cancelWidget', function () {
-    jQuery(this).parents('.openWidget').remove();
+    const thisElm = jQuery(this).parents('.openWidget');
+    const widgetId = thisElm.attr('id');
+    updateHistory('PATCH', widgetId, { result: 'Closed', modifiedDate: dateConvertToDDMMYYY(new Date()) }, updateWidgetHtml);
   });
   jQuery('#mainNavBar').on('click', '#AllIssue', () => {
     createUserissueSection('userIsuueContainer', `${gitBaseUrl}user/issues?filter=all&state=all`);

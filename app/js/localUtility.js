@@ -79,9 +79,33 @@ function getErrorDescription(statusCode) {
   }
   return statusDesc;
 }
+function createCommonClosedOrSubmitWidget(widgetData, update) {
+  const widgetInternalHtml = `
+  <h5 class='text-center mt-2 mb-4 text-info'>This widget has been
+  <span class='${widgetData.result.toLowerCase() === 'closed' ? 'text-danger' : 'text-success'} font-weight-bold'> ${widgetData.result} </span></h5>
+  <p class='text-center font-weight-bold text-dark'>The query was:
+      <span class='text-success'>${widgetData.source}</span>
+  </p>
+  <p class='d-inline font-weight-bold text-dark'>Create Date:
+      <span class='text-success'>${widgetData.createDate}</span>
+  </p>
+  <p class='d-inline float-right mr-2 font-weight-bold text-dark'>Modified Date:
+      <span class='text-success'>${widgetData.modifiedDate}</span>
+  </p>`;
+  if (update) {
+    jQuery(`#${widgetData.id}`).html(widgetInternalHtml)
+      .removeClass('openWidget').addClass('closedWidget')
+      .attr('id', `closed-${widgetData.id}`);
+  } else {
+    const widgetHtml = ` <div class='p-3 my-3 mx-auto border border-info rounded  closedWidget' 
+    id='closed-${widgetData.id}'>${widgetInternalHtml}</div>`;
+    jQuery('#widgetSection').prepend(widgetHtml);
+  }
+}
 export {
   generateRandomId,
   getFormData,
+  createCommonClosedOrSubmitWidget,
   makeFormEditable,
   dateConvertToDDMMYYY,
   setDataToLocalStorage,

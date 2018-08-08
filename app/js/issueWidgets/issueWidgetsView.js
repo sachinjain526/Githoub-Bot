@@ -15,14 +15,14 @@ function saveDataInHistory(passedData) {
 function createIssueWidgets(issueData) {
     let componentId = '';
     if (issueData && issueData.id) {
-        componentId = issueData.id;
+        componentId = `issueWidget-${issueData.id}`;
     } else {
-        componentId = generateRandomId();
+        componentId = `issueWidget-${generateRandomId()}`;
         const passedData = { ...issueData, id: componentId };
         saveDataInHistory(passedData);
     }
     jQuery('#widgetSection').prepend(`
-        <div class="p-3 my-3 mx-auto border border-info rounded openWidget" id="issueWidget-${componentId}" repo="${issueData.repoName}">
+        <div class="p-3 my-3 mx-auto border border-info rounded openWidget" id="${componentId}" repo="${issueData.repoName}">
             <h3 class="text-center mt-2 mb-4 text-danger"> Create Issue </h3>
                 <form method="post" action="#" class="w-100 text-center">
                     <div class="form-group row">

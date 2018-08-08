@@ -7,24 +7,9 @@ import createRepoWidgets from './repoWidgets/repoWidgetsView';
 import createIssueWidgets from './issueWidgets/issueWidgetsView';
 import createCollaboratorWidgets from './collaboratorWidgets/collaboratorWidgetsView';
 import { getHistory } from './GetDataService';
+import { createCommonClosedOrSubmitWidget } from './localUtility';
 
 const jQuery = require('jquery');
-
-function createCommonClosedOrSubmitWidget(widgetData) {
-  const widgetHtml = ` <div class="p-3 my-3 mx-auto border border-info rounded  closedWidget" id="closed-${widgetData.id}">
-  <h5 class="text-center mt-2 mb-4 text-danger">This widget has been closed with action ${widgetData.result} </h5>
-  <p class="text-center">The query was:
-      <span>${widgetData.source}</span>
-  </p>
-  <p class="d-inline">Create Date:
-      <span>${widgetData.createDate}</span>
-  </p>
-  <p class="d-inline float-right mr-2">Closed Date:
-      <span>${widgetData.closedDate}</span>
-  </p>
-</div>`;
-  jQuery('#widgetSection').prepend(widgetHtml);
-}
 
 function initialPageRendering(data) {
   jQuery.each(data, (index, value) => {
