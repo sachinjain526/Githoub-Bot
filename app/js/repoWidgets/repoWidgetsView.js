@@ -15,7 +15,7 @@ function saveDataInHistory(passedData) {
 function createRepoWidgets(repoData) {
     let componentId = '';
     if (repoData && repoData.id) {
-        componentId = `repoWidget-${repoData.id}`;
+        componentId = repoData.id;
     } else {
         componentId = `repoWidget-${generateRandomId()}`;
         const passedData = { ...repoData, id: componentId };

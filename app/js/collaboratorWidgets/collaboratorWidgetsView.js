@@ -14,7 +14,7 @@ function saveDataInHistory(passedData) {
 function createCollaboratorWidgets(collaboratorData) {
     let componentId = '';
     if (collaboratorData && collaboratorData.id) {
-        componentId = `collaboratorWidget-${collaboratorData.id}`;
+        componentId = collaboratorData.id;
     } else {
         componentId = `collaboratorWidget-${generateRandomId()}`;
         const passedData = { ...collaboratorData, id: componentId };
@@ -46,7 +46,7 @@ function createCollaboratorWidgets(collaboratorData) {
                     </div>
                 </div>
                 <div class="form-group text-center ">
-                    <button type="button" class="btn btn-success collaboratorSubmit">Submit</button>
+                    <button type="button" class="btn btn-success collaboratorSubmit">Add Collaborator</button>
                     <button type="button" class="btn btn-danger cancelWidget">Close</button>
                 </div>
             </form>         

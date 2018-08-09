@@ -67,12 +67,14 @@ function CreateRpeoAndIssueWidget(recastData) {
           url += `${url}/${number}`;
         }
       } else {
-        url += 'user/issues?filter=all';
+        url = `${gitBaseUrl}user/issues?filter=all`;
         if (state) {
           url += `${url}&state=${state}`;
+        } else {
+          url = `${url}&state=all`;
         }
       }
-      createUserissueSection('userIsuueContainer', url);
+      createUserissueSection('widgetSection', url, true);
     } else if (intent === 'add-collaborator') {
       const action = recastData.entities.action ? recastData.entities.action[0].value : 'PATCH';
       const repoName = recastData.entities.repository ? recastData.entities.repository[0].value : '';
@@ -85,6 +87,11 @@ function CreateRpeoAndIssueWidget(recastData) {
 }
 function updateWidgetHtml(data) {
   createCommonClosedOrSubmitWidget(data, true);
+}
+function updateSuccessFully() {
+  createModelPopup({
+    modalId: 'completeIssueCreation', modalHeading: 'Confirmation', ClassName: 'bg-success', modalContent: "You have successfully uodated issue in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: 'Close',
+  });
 }
 // event listener start from here
 function eventListener() {
@@ -133,32 +140,39 @@ function eventListener() {
       jQuery(this).remove();
     });
   });
-  jQuery('#userIsuueContainer').on('click', '.editSection', function () {
+  jQuery('body').on('click', '.editSection', function () {
     const thisObj = jQuery(this);
     const containerId = thisObj.attr('container-id');
     makeFormEditable(containerId);
     thisObj.siblings('.submitSection').removeClass('d-none');
     thisObj.addClass('d-none');
   });
-  jQuery('#userIsuueContainer').on('click', '.submitSection', function () {
+  jQuery('body').on('click', '.submitSection', function () {
     const thisObj = jQuery(this);
     const containerId = thisObj.attr('container-id');
     const url = thisObj.parent().attr('api-url');
     const formData = getFormData(containerId);
     const thisData = jQuery.extend(true, {}, issueCreateJson, formData);
-    EditGitIssue(url, thisData);
+    EditGitIssue(url, thisData, () => {
+      updateHistory('PATCH', containerId, { ...thisData, modifiedDate: dateConvertToDDMMYYY(new Date()) }, updateSuccessFully);
+    });
   });
-  jQuery('#userIsuueContainer').on('click', '.closeThisIsuue', function () {
+  jQuery('body').on('click', '.closeThisIsuue', function () {
     const thisObj = jQuery(this);
+    const containerId = thisObj.attr('container-id');
     const url = thisObj.parent().attr('api-url');
-    EditGitIssue(url, { state: 'closed' });
+    EditGitIssue(url, { state: 'closed' }, () => {
+      updateHistory('PATCH', containerId, { state: 'closed', modifiedDate: dateConvertToDDMMYYY(new Date()) }, updateSuccessFully);
+    });
   });
-  jQuery('#userIsuueContainer').on('click', '.reopenThisIsuue', function () {
+  jQuery('body').on('click', '.reopenThisIsuue', function () {
     const thisObj = jQuery(this);
+    const containerId = thisObj.attr('container-id');
     const url = thisObj.parent().attr('api-url');
-    EditGitIssue(url, { state: 'open' });
+    EditGitIssue(url, { state: 'open' }, () => {
+      updateHistory('PATCH', containerId, { state: 'open', modifiedDate: dateConvertToDDMMYYY(new Date()) }, updateSuccessFully);
+    });
   });
 }
-
 
 export default eventListener;

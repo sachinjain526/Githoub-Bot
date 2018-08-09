@@ -1,27 +1,23 @@
 import { commonPostAjaxFunc, commonGetAjaxFunc } from '../GetDataService';
 import renderIsuueWidgets from './userIssueWidgetView';
-import createModelPopup from '../createModal/createModalWidget';
 
 let containerId = '';
+let updateFlag = null;
 
 function renderIssueWidget(resData) {
-  renderIsuueWidgets(containerId, resData);// "userIsuueContainer"
+  renderIsuueWidgets(containerId, resData, updateFlag);// "userIsuueContainer"
 }
 
-function updateSuccessFully() {
-  createModelPopup({
-    modalId: 'completeIssueCreation', modalHeading: 'Confirmation', ClassName: 'bg-success', modalContent: "You have successfully uodated issue in the gitHub <span class='text-success'> For More Info Please Visit: www.github.com</span>", buttonName: 'Close',
-  });
-}
 function getAllUserIssue(fullurl, callback) {
   commonGetAjaxFunc(fullurl, callback);
 }
 
-function EditGitIssue(url, passData) {
+function EditGitIssue(url, passData, updateSuccessFully) {
   commonPostAjaxFunc(url, 'patch', passData, updateSuccessFully);
 }
-function createUserissueSection(container, fullUrl) {
+function createUserissueSection(container, fullUrl, updateFlags) {
   containerId = container;
+  updateFlag = updateFlags;
   getAllUserIssue(fullUrl, renderIssueWidget);
 }
 

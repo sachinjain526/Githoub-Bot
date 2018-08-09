@@ -15,7 +15,7 @@ function saveDataInHistory(passedData) {
 function createIssueWidgets(issueData) {
     let componentId = '';
     if (issueData && issueData.id) {
-        componentId = `issueWidget-${issueData.id}`;
+        componentId = issueData.id;
     } else {
         componentId = `issueWidget-${generateRandomId()}`;
         const passedData = { ...issueData, id: componentId };

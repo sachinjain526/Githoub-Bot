@@ -9,6 +9,7 @@
         "linebreak-style": 0,
         "func-names": "off",
         "indent": "off",
-        "no-console": "off"
+        "no-console": "off",
+        "camelcase": "off"
     }
 }

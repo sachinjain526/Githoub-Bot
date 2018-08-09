@@ -8,6 +8,7 @@ import createIssueWidgets from './issueWidgets/issueWidgetsView';
 import createCollaboratorWidgets from './collaboratorWidgets/collaboratorWidgetsView';
 import { getHistory } from './GetDataService';
 import { createCommonClosedOrSubmitWidget } from './localUtility';
+import renderIsuueWidgets from './getAndupdateAllissues/userIssueWidgetView';
 
 const jQuery = require('jquery');
 
@@ -26,6 +27,9 @@ function initialPageRendering(data) {
       if (value.intent === 'add-collaborator') {
         createCollaboratorWidgets(value);
       }
+      if (value.intent === 'display-issues') {
+        renderIsuueWidgets('widgetSection', [value], true, true);
+      }
     }
   });
 }
@@ -37,15 +41,12 @@ function onLoadEventToFetchData() {
 function renderWidgets() {
   const curentState = store.getState();
   if (curentState.repoWidget && curentState.action === CREATE_REPO) {
-    // setDataToLocalStorage('repoWidget', JSON.stringify(curentState.repoWidget));
     createRepoWidgets(curentState.repoWidget);
   }
   if (curentState.issueWidget && curentState.action === CREATE_ISSUE) {
-    // setDataToLocalStorage('issueWidget', JSON.stringify(curentState.issueWidget));
     createIssueWidgets(curentState.issueWidget);
   }
   if (curentState.collaboratorWidget && curentState.action === ADD_COLLABORATOR) {
-    // setDataToLocalStorage('collaboratorWidget', JSON.stringify(curentState.collaboratorWidget));
     createCollaboratorWidgets(curentState.collaboratorWidget);
   }
 }
